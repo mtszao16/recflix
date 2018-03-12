@@ -36,3 +36,5 @@ buildNumber.properties
 
 # Java Extension generated settings
 .settings/
+.classpath
+.project
