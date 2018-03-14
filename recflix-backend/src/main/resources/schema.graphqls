@@ -1,12 +1,37 @@
-type Link {
-  url: String!
-  description: String!
+schema {
+  query: Query
+  mutation: Mutation
 }
 
 type Query {
-  allLinks: [Link]
+  allUsers: [User]
+  allUserInteractions: [UserInteraction]
 }
 
-schema {
-  query: Query
+type Mutation {
+  createUser(name: String!, authProvider: AuthData!): User
+  signinUser(auth: AuthData): SigninPayload
+  logUserInteraction(time: String! , type: String!): UserInteraction
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String
+  password: String
+}
+
+type UserInteraction {
+  interationTime: String!
+  interactionType: String!
+}
+
+type SigninPayload {
+  token: String
+  user: User
+}
+
+input AuthData {
+  email: String!
+  password: String!
 }
