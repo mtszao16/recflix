@@ -1,5 +1,7 @@
 package com.recflix.app;
 
+import com.recflix.utils.HashString;
+
 import com.mongodb.client.MongoCollection;
 
 import org.bson.Document;
@@ -34,28 +36,13 @@ public class UserRepository {
     }
 
     public User saveUser(User user) {
-        StringBuffer hexString = new StringBuffer();
-        MessageDigest messageDigest;
-        try {
-            messageDigest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = messageDigest.digest(user.getPassword().getBytes("UTF-8"));
-
-            for (int i = 0; i < hash.length; i++) {
-                String hex = Integer.toHexString(0xff & hash[i]);
-                if (hex.length() == 1)
-                    hexString.append('0');
-                hexString.append(hex);
-            }            
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-
+        String hashedPassword = HashString.hashTheString(user.getPassword());
         Document doc = new Document();
         doc.append("name", user.getName());
         doc.append("email", user.getEmail());
-        doc.append("password", hexString.toString());
+        doc.append("password", hashedPassword);
         users.insertOne(doc);
-        return new User(doc.get("_id").toString(), user.getName(), user.getEmail(), hexString.toString());
+        return new User(doc.get("_id").toString(), user.getName(), user.getEmail(), hashedPassword);
     }
 
     private User user(Document doc) {
