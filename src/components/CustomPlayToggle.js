@@ -1,27 +1,39 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import classNames from "classnames";
+import { graphql, compose } from "react-apollo";
 
+import { LOG_INTERACTION } from "../utils/graphql_tags";
 const propTypes = {
   actions: PropTypes.object,
   player: PropTypes.object,
   className: PropTypes.string
 };
 
-export default class CustomPlayToggle extends Component {
+class CustomPlayToggle extends Component {
   constructor(props, context) {
     super(props, context);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  async handleClick() {
     const { actions, player } = this.props;
     if (player.paused) {
       actions.play();
-      alert("play");
+      await this.props.logInteraction({
+        variables: {
+          time: new Date(),
+          type: "play"
+        }
+      });
     } else {
       actions.pause();
-      alert("pause");
+      await this.props.logInteraction({
+        variables: {
+          time: new Date(),
+          type: "pause"
+        }
+      });
     }
   }
 
@@ -51,3 +63,7 @@ export default class CustomPlayToggle extends Component {
 }
 
 CustomPlayToggle.propTypes = propTypes;
+
+export default compose(graphql(LOG_INTERACTION, { name: "logInteraction" }))(
+  CustomPlayToggle
+);

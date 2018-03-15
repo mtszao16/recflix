@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import classNames from "classnames";
+import { graphql, compose } from "react-apollo";
+import { LOG_INTERACTION } from "../utils/graphql_tags";
 
 import {
   Slider,
@@ -17,7 +19,7 @@ const propTypes = {
   className: PropTypes.string
 };
 
-export default class CustomSeekBar extends Component {
+class CustomSeekBar extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -59,13 +61,18 @@ export default class CustomSeekBar extends Component {
 
   handleMouseDown() {}
 
-  handleMouseUp(event) {
+  async handleMouseUp(event) {
     const { actions } = this.props;
     const newTime = this.getNewTime(event);
     // Set new time (tell video to seek to new time)
     actions.seek(newTime);
     actions.handleEndSeeking(newTime);
-    alert('seek')
+    await this.props.logInteraction({
+      variables: {
+        time: new Date(),
+        type: "seek"
+      }
+    });
   }
 
   handleMouseMove(event) {
@@ -123,3 +130,7 @@ export default class CustomSeekBar extends Component {
 }
 
 CustomSeekBar.propTypes = propTypes;
+
+export default compose(graphql(LOG_INTERACTION, { name: "logInteraction" }))(
+  CustomSeekBar
+);

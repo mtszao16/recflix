@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import classNames from "classnames";
+import { graphql, compose } from "react-apollo";
 
+import { LOG_INTERACTION } from "../utils/graphql_tags";
 const propTypes = {
   actions: PropTypes.object,
   player: PropTypes.object,
@@ -13,19 +15,32 @@ const defaultProps = {
   position: "left"
 };
 
-export default class CustomBigPlayButton extends Component {
+class CustomBigPlayButton extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {}
-
-  handleClick() {
+  async handleClick() {
     const { actions, player } = this.props;
-    alert("play");
-    actions.play();
+    if (player.paused) {
+      actions.play();
+      await this.props.logInteraction({
+        variables: {
+          time: new Date(),
+          type: "play"
+        }
+      });
+    } else {
+      actions.pause();
+      await this.props.logInteraction({
+        variables: {
+          time: new Date(),
+          type: "pause"
+        }
+      });
+    }
   }
 
   render() {
@@ -53,3 +68,7 @@ export default class CustomBigPlayButton extends Component {
 
 CustomBigPlayButton.propTypes = propTypes;
 CustomBigPlayButton.defaultProps = defaultProps;
+
+export default compose(graphql(LOG_INTERACTION, { name: "logInteraction" }))(
+  CustomBigPlayButton
+);
