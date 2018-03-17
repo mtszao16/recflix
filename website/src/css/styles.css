@@ -6220,6 +6220,21 @@ html * {
 .show > .btn-primary.dropdown-toggle {
   background-color: #0066bb; }
 
+.nav-pills .nav-link {
+  border-radius: 2px;
+  border-bottom: 3px solid #303030; }
+
+.nav-pills .nav-link:hover {
+  color: #dfdfdf;
+  background-color: #303030;
+  border-bottom: 3px solid #303030; }
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #121212;
+  border-bottom: 3px solid #0066ff; }
+
 .main-bg {
   transform: translate(-50%) scale(0.74);
   position: absolute;
