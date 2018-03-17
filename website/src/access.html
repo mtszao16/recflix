@@ -25,7 +25,7 @@
             <div class="col">
                 <div class="form">
 
-                    <ul class="nav nav-tabs" role="tablist">
+                    <ul class="nav nav-pills nav-fill" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" href="#login" role="tab" data-toggle="tab">Log In</a>
                         </li>
@@ -35,25 +35,31 @@
                     </ul>
 
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade in active" id="login">
+                        <div role="tabpanel" class="tab-pane active" id="login">
                             <form class="needs-validation" novalidate>
                                 <div class="form-row">
                                     <div class="col">
                                         <label for="validationCustomEmail">Email Address</label>
                                         <input type="email" class="form-control" id="validationCustomEmail" placeholder="Email Address" aria-describedby="inputGroupPrepend" required>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid email address.
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col">
                                         <label for="validationCustomPassword">Password</label>
                                         <input type="password" class="form-control" id="validationCustomPassword" placeholder="Password" aria-describedby="inputGroupPrepend" required>
+                                        <div class="invalid-feedback">
+                                            Please provide a password.
+                                        </div>
                                     </div>
                                 </div>
                                 <button class="btn btn-primary btn-block" type="submit">Log In</button>
                             </form>
                         </div>
 
-                        <div role="tabpanel" class="tab-pane fade" id="signup">
+                        <div role="tabpanel" class="tab-pane" id="signup">
                             <form class="needs-validation" novalidate>
                                 <div class="form-row">
                                     <div class="col-sm">
