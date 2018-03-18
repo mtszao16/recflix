@@ -112,12 +112,12 @@
         function graphQLFetcher(graphQLParams) {
             // This example expects a GraphQL server at the path /graphql.
             // Change this to point wherever you host your GraphQL server.
-            return fetch('/graphql', {
+            return fetch('/graphqlApi', {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer 5a835d068bfcab3421f0c063',
+                    'Authorization': 'Bearer 5aa8e7991d9c4b4ebd6de1f3',
                 },
                 body: JSON.stringify(graphQLParams),
                 credentials: 'include',
