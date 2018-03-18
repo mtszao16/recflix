@@ -11,7 +11,7 @@ import java.util.Optional;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
-@WebServlet(urlPatterns = "/graphql")
+@WebServlet(urlPatterns = "/graphqlApi")
 public class GraphQLEndpoint extends SimpleGraphQLServlet {
 
     private static final UserRepository userRepository;

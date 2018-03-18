@@ -12,8 +12,6 @@ import static com.mongodb.client.model.Filters.eq;
 import java.util.List;
 import java.util.ArrayList;
 
-import java.security.MessageDigest;
-
 /**
  * Manages user persistence
  */

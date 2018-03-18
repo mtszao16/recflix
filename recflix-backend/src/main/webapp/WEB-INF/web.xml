@@ -8,7 +8,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>GraphQLEndpoint</servlet-name>
-        <url-pattern>/graphql</url-pattern>
+        <url-pattern>/graphqlApi</url-pattern>
     </servlet-mapping>
     <filter>
         <filter-name>CorsFilter</filter-name>
@@ -16,6 +16,6 @@
     </filter>
     <filter-mapping>
         <filter-name>CorsFilter</filter-name>
-        <url-pattern>/graphql/*</url-pattern>
+        <url-pattern>/graphqlApi/*</url-pattern>
     </filter-mapping>
 </web-app>
