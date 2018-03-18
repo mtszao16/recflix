@@ -24,6 +24,7 @@ type User {
 type UserInteraction {
   interationTime: String!
   interactionType: String!
+  interactedBy: User!
 }
 
 type SigninPayload {

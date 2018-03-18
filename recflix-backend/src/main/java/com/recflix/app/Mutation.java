@@ -5,6 +5,7 @@ import com.recflix.utils.HashString;
 import com.coxautodev.graphql.tools.GraphQLRootResolver;
 
 import graphql.GraphQLException;
+import graphql.schema.DataFetchingEnvironment;
 
 /**
  * Mutation root
@@ -24,9 +25,11 @@ public class Mutation implements GraphQLRootResolver {
         return userRepository.saveUser(newUser);
     }
 
-    public UserInteraction logUserInteraction(String time, String type) {
-        UserInteraction newUserInteraction = new UserInteraction(time, type);
-        return userInteractionRepository.saveUserInteraction(newUserInteraction);
+    public UserInteraction logUserInteraction(String time, String type, DataFetchingEnvironment env) {
+        AuthContext context = env.getContext();
+        UserInteraction newUserInteraction = new UserInteraction(time, type, context.getUser().getId());
+        userInteractionRepository.saveUserInteraction(newUserInteraction);
+        return newUserInteraction;
     }
 
     public SigninPayload signinUser(AuthData auth) {
