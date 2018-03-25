@@ -1,28 +1,23 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Player,
   ControlBar,
   PlaybackRateMenuButton,
   BigPlayButton
-} from "video-react";
+} from 'video-react';
 
-import Nav from "./Nav";
-import CustomForwardReplayControl from "./CustomForwardReplayControl";
-import CustomPlayToggle from "./CustomPlayToggle";
-import CustomProgressControl from "./CustomProgressControl";
-import CustomBigPlayButton from "./CustomBigPlayButton";
-const CustomForwardControl = CustomForwardReplayControl("forward");
-const CustomReplayControl = CustomForwardReplayControl("replay");
+import CustomForwardReplayControl from './CustomForwardReplayControl';
+import CustomPlayToggle from './CustomPlayToggle';
+import CustomProgressControl from './CustomProgressControl';
+import CustomBigPlayButton from './CustomBigPlayButton';
+const CustomForwardControl = CustomForwardReplayControl('forward');
+const CustomReplayControl = CustomForwardReplayControl('replay');
 
 class Display extends Component {
   render() {
     return (
       <div>
-        <Nav />
-        <h3 className="text-center"> Movie Recommender </h3>
-        <hr />
-
         <div className="col-sm-12">
           <Player
             disableDefaultControls
