@@ -7,35 +7,31 @@ class Header extends Component {
   render() {
     const authToken = localStorage.getItem(AUTH_TOKEN);
     return (
-      <nav className="navbar navbar-default">
+      <nav className="navbar transparent-header">
         <div className="navbar-header">
           <Link className="navbar-brand" to="/">
-            Recflix
+            <img alt="Logo" src="./assets/images/recflixlogo.png" id="logo" />
           </Link>
         </div>
-        {authToken && (
-          <div className="flex">
-            <div className="ml1">|</div>
-            <Link to="/" className="ml1 no-underline black">
-              submit
-            </Link>
-          </div>
-        )}
         <div className="flex flex-fixed">
           {authToken ? (
-            <div
-              className="ml1 pointer black"
-              onClick={() => {
-                localStorage.removeItem(AUTH_TOKEN);
-                this.props.history.push(`/`);
-              }}
-            >
-              logout
+            <div className="navbar">
+              <Link
+                to="/login"
+                className="btn btn-primary"
+                onClick={() => {
+                  localStorage.removeItem(AUTH_TOKEN);
+                }}
+              >
+                Log Out
+              </Link>
             </div>
           ) : (
-            <Link to="/login" className="ml1 no-underline black">
-              login
-            </Link>
+            <div className="navbar">
+              <Link to="/login" className="btn btn-primary">
+                Log In
+              </Link>
+            </div>
           )}
         </div>
       </nav>
