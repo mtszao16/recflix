@@ -26,12 +26,14 @@ class Header extends Component {
                 Log Out
               </Link>
             </div>
-          ) : (
+          ) : this.props.location.pathname !== '/login' ? (
             <div className="navbar">
               <Link to="/login" className="btn btn-primary">
                 Log In
               </Link>
             </div>
+          ) : (
+            <span />
           )}
         </div>
       </nav>
