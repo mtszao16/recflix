@@ -6,12 +6,21 @@ schema {
 type Query {
   allUsers: [User]
   allUserInteractions: [UserInteraction]
+  allMovies: [Movie]
+  allFeedbacks: [Feedback]
 }
 
 type Mutation {
   createUser(name: String!, authProvider: AuthData!): User
   signinUser(auth: AuthData): SigninPayload
-  logUserInteraction(time: String! , type: String!): UserInteraction
+  logUserInteraction(time: String!, type: String!): UserInteraction
+  addMovie(name: String!, url: String): Movie
+  recordFeedback(
+    rating: Int!
+    type: String
+    userId: String
+    movieId: String
+  ): Feedback
 }
 
 type User {
@@ -27,6 +36,21 @@ type UserInteraction {
   interactedBy: User!
 }
 
+type Movie {
+  id: ID!
+  name: String!
+  url: String
+}
+
+type Feedback {
+  id: ID!
+  rating: Int!
+  type: String
+  userId: String
+  movieId: String
+  createdAt: DateTime!
+}
+
 type SigninPayload {
   token: String
   user: User
@@ -36,3 +60,5 @@ input AuthData {
   email: String!
   password: String!
 }
+
+scalar DateTime

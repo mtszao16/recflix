@@ -4,6 +4,8 @@ import com.recflix.utils.AuthUtils;
 import com.recflix.utils.HashString;
 
 import java.io.UnsupportedEncodingException;
+import java.time.Instant;
+import java.time.ZoneOffset;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -20,10 +22,15 @@ public class Mutation implements GraphQLRootResolver {
 
     private final UserRepository userRepository;
     private final UserInteractionRepository userInteractionRepository;
+    private final MovieRepository movieRepository;
+    private final FeedbackRepository feedbackRepository;
 
-    public Mutation(UserRepository userRepository, UserInteractionRepository userInteractionRepository) {
+    public Mutation(UserRepository userRepository, UserInteractionRepository userInteractionRepository,
+            MovieRepository movieRepository, FeedbackRepository feedbackRepository) {
         this.userRepository = userRepository;
         this.userInteractionRepository = userInteractionRepository;
+        this.movieRepository = movieRepository;
+        this.feedbackRepository = feedbackRepository;
     }
 
     public User createUser(String name, AuthData auth) {
@@ -31,11 +38,20 @@ public class Mutation implements GraphQLRootResolver {
         return userRepository.saveUser(newUser);
     }
 
+    public Movie addMovie(String name, String url) {
+        Movie newMovie = new Movie(name, url);
+        return movieRepository.saveMovie(newMovie);
+    }
+
+    public Feedback recordFeedback(Integer rating, String type, String userId, String movieId) {
+        Feedback newFeedback = new Feedback(rating, type, Instant.now().atZone(ZoneOffset.UTC), userId, movieId);
+        return feedbackRepository.saveFeedback(newFeedback);
+    }
+
     public UserInteraction logUserInteraction(String time, String type, DataFetchingEnvironment env) {
         AuthContext context = env.getContext();
         UserInteraction newUserInteraction = new UserInteraction(time, type, context.getUser().getId());
-        userInteractionRepository.saveUserInteraction(newUserInteraction);
-        return newUserInteraction;
+        return userInteractionRepository.saveUserInteraction(newUserInteraction);
     }
 
     public SigninPayload signinUser(AuthData auth) {
