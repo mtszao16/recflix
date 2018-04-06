@@ -39,12 +39,15 @@ public class UserInteractionRepository {
         return allInteractions;
     }
 
-    public void saveUserInteraction(UserInteraction userInteraction) {
+    public UserInteraction saveUserInteraction(UserInteraction userInteraction) {
         Document doc = new Document();
         doc.append("interationTime", userInteraction.getInterationTime());
         doc.append("interactionType", userInteraction.getInteractionType());
         doc.append("interactedBy", userInteraction.getUserId());
         userInteractions.insertOne(doc);
+
+        return new UserInteraction(doc.getString("interationTime"), doc.getString("interactionType"),
+                doc.getString("interactedBy"));
     }
 
     private UserInteraction userInteraction(Document doc) {
