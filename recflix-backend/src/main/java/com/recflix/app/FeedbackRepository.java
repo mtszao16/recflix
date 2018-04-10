@@ -45,13 +45,13 @@ public class FeedbackRepository {
         feedbacks.insertOne(doc);
 
         return new Feedback(doc.get("_id").toString(), doc.getInteger("rating"), doc.getString("type"),
-                ZonedDateTime.parse(doc.getString("createdAt")), doc.getString("watchedBy"),
-                doc.getString("watchedMovie"));
+                ZonedDateTime.parse(doc.getString("createdAt")), doc.getString("userId"),
+                doc.getString("movieId"));
     }
 
     private Feedback feedback(Document doc) {
         return new Feedback(doc.get("_id").toString(), doc.getInteger("rating"), doc.getString("type"),
-                ZonedDateTime.parse(doc.getString("createdAt")), doc.getString("watchedBy"),
-                doc.getString("watchedMovie"));
+                ZonedDateTime.parse(doc.getString("createdAt")), doc.getString("userId"),
+                doc.getString("movieId"));
     }
 }
