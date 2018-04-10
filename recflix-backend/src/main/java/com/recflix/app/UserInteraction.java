@@ -1,19 +1,23 @@
 package com.recflix.app;
 
+import java.time.ZonedDateTime;
+
 public class UserInteraction {
 
-    private final String interationTime;
+    private final ZonedDateTime interactionTime;
     private final String interactionType;
     private final String userId;
+    private final String movieId;
 
-    public UserInteraction(String interationTime, String interactionType, String userId) {
-        this.interationTime = interationTime;
+    public UserInteraction(ZonedDateTime interactionTime, String interactionType, String userId, String movieId) {
+        this.interactionTime = interactionTime;
         this.interactionType = interactionType;
         this.userId = userId;
+        this.movieId = movieId;
     }
 
-    public String getInterationTime() {
-        return interationTime;
+    public ZonedDateTime getInteractionTime() {
+        return interactionTime;
     }
 
     public String getInteractionType() {
@@ -22,5 +26,9 @@ public class UserInteraction {
 
     public String getUserId() {
         return userId;
+    }
+
+    public String getMovieId() {
+        return movieId;
     }
 }

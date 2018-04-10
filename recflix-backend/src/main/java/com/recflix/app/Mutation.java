@@ -43,14 +43,17 @@ public class Mutation implements GraphQLRootResolver {
         return movieRepository.saveMovie(newMovie);
     }
 
-    public Feedback recordFeedback(Integer rating, String type, String userId, String movieId) {
-        Feedback newFeedback = new Feedback(rating, type, Instant.now().atZone(ZoneOffset.UTC), userId, movieId);
+    public Feedback recordFeedback(Integer rating, String type, String movieId, DataFetchingEnvironment env) {
+        AuthContext context = env.getContext();
+        Feedback newFeedback = new Feedback(rating, type, Instant.now().atZone(ZoneOffset.UTC),
+                context.getUser().getId(), movieId);
         return feedbackRepository.saveFeedback(newFeedback);
     }
 
-    public UserInteraction logUserInteraction(String time, String type, DataFetchingEnvironment env) {
+    public UserInteraction logUserInteraction(String type, String movieId, DataFetchingEnvironment env) {
         AuthContext context = env.getContext();
-        UserInteraction newUserInteraction = new UserInteraction(time, type, context.getUser().getId());
+        UserInteraction newUserInteraction = new UserInteraction(Instant.now().atZone(ZoneOffset.UTC), type,
+                context.getUser().getId(), movieId);
         return userInteractionRepository.saveUserInteraction(newUserInteraction);
     }
 

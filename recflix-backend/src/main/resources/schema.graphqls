@@ -13,14 +13,9 @@ type Query {
 type Mutation {
   createUser(name: String!, authProvider: AuthData!): User
   signinUser(auth: AuthData): SigninPayload
-  logUserInteraction(time: String!, type: String!): UserInteraction
+  logUserInteraction(type: String!, movieId: String): UserInteraction
   addMovie(name: String!, url: String): Movie
-  recordFeedback(
-    rating: Int!
-    type: String
-    userId: String
-    movieId: String
-  ): Feedback
+  recordFeedback(rating: Int!, type: String, movieId: String): Feedback
 }
 
 type User {
@@ -31,9 +26,10 @@ type User {
 }
 
 type UserInteraction {
-  interationTime: String!
+  interactionTime: String!
   interactionType: String!
   interactedBy: User!
+  movieId: String
 }
 
 type Movie {

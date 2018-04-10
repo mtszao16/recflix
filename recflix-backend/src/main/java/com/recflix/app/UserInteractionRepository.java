@@ -7,6 +7,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,17 +42,18 @@ public class UserInteractionRepository {
 
     public UserInteraction saveUserInteraction(UserInteraction userInteraction) {
         Document doc = new Document();
-        doc.append("interationTime", userInteraction.getInterationTime());
+        doc.append("interactionTime", Scalars.dateTime.getCoercing().serialize(userInteraction.getInteractionTime()));
         doc.append("interactionType", userInteraction.getInteractionType());
         doc.append("interactedBy", userInteraction.getUserId());
+        doc.append("movieId", userInteraction.getMovieId());
         userInteractions.insertOne(doc);
 
-        return new UserInteraction(doc.getString("interationTime"), doc.getString("interactionType"),
-                doc.getString("interactedBy"));
+        return new UserInteraction(ZonedDateTime.parse(doc.getString("interactionTime")),
+                doc.getString("interactionType"), doc.getString("interactedBy"), doc.getString("movieId"));
     }
 
     private UserInteraction userInteraction(Document doc) {
-        return new UserInteraction(doc.getString("interationTime"), doc.getString("interactionType"),
-                doc.getString("interactedBy"));
+        return new UserInteraction(ZonedDateTime.parse(doc.getString("interactionTime")),
+                doc.getString("interactionType"), doc.getString("interactedBy"), doc.getString("movieId"));
     }
 }
