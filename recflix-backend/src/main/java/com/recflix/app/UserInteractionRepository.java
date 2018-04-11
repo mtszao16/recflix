@@ -52,16 +52,17 @@ public class UserInteractionRepository {
         doc.append("interactedBy", userInteraction.getUserId());
         doc.append("movieId", userInteraction.getMovieId());
         doc.append("value", userInteraction.getValue());
+        doc.append("amount", userInteraction.getAmount());
         userInteractions.insertOne(doc);
 
         return new UserInteraction(doc.get("_id").toString(), ZonedDateTime.parse(doc.getString("interactionTime")),
                 doc.getString("interactionType"), doc.getString("interactedBy"), doc.getString("movieId"),
-                doc.getInteger("value"));
+                doc.getInteger("value"), doc.getInteger("amount"));
     }
 
     private UserInteraction userInteraction(Document doc) {
         return new UserInteraction(doc.get("_id").toString(), ZonedDateTime.parse(doc.getString("interactionTime")),
                 doc.getString("interactionType"), doc.getString("interactedBy"), doc.getString("movieId"),
-                doc.getInteger("value"));
+                doc.getInteger("value"), doc.getInteger("amount"));
     }
 }

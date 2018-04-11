@@ -51,9 +51,12 @@ class CustomSeekBar extends Component {
   }
 
   getNewTime(event) {
-    const { player: { duration } } = this.props;
+    const { player: { duration, currentTime } } = this.props;
     const distance = this.slider.calculateDistance(event);
     const newTime = distance * duration;
+
+    const direction = newTime > currentTime ? 'forward' : 'backward';
+    this.setState({ direction });
 
     // Don't let video end while scrubbing.
     return newTime === duration ? newTime - 0.1 : newTime;
@@ -62,15 +65,22 @@ class CustomSeekBar extends Component {
   handleMouseDown() {}
 
   async handleMouseUp(event) {
-    const { actions } = this.props;
+    const { actions, player: { currentTime } } = this.props;
     const newTime = this.getNewTime(event);
     // Set new time (tell video to seek to new time)
     actions.seek(newTime);
     actions.handleEndSeeking(newTime);
+
+    const duration =
+      this.state.direction === 'forward'
+        ? newTime - currentTime
+        : currentTime - newTime;
+
     await this.props.logInteraction({
       variables: {
-        type: 'seek',
-        movieId: '5ac799d477e7d3cc0cfbcfbc'
+        type: `${this.state.direction} seek`,
+        movieId: '5ac799d477e7d3cc0cfbcfbc',
+        amount: duration
       }
     });
   }
@@ -81,14 +91,26 @@ class CustomSeekBar extends Component {
     actions.handleSeekingTime(newTime);
   }
 
-  stepForward() {
+  async stepForward() {
     const { actions } = this.props;
     actions.forward(5);
+    await this.props.logInteraction({
+      variables: {
+        type: 'forward',
+        movieId: '5ac799d477e7d3cc0cfbcfbc'
+      }
+    });
   }
 
-  stepBack() {
+  async stepBack() {
     const { actions } = this.props;
     actions.replay(5);
+    await this.props.logInteraction({
+      variables: {
+        type: 'backward',
+        movieId: '5ac799d477e7d3cc0cfbcfbc'
+      }
+    });
   }
 
   render() {

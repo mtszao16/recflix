@@ -1,8 +1,12 @@
 import gql from 'graphql-tag';
 
 export const LOG_INTERACTION = gql`
-  mutation LogUserInteractionMutation($type: String!, $movieId: String!) {
-    logUserInteraction(type: $type, movieId: $movieId) {
+  mutation LogUserInteractionMutation(
+    $type: String!
+    $movieId: String!
+    $amount: Int
+  ) {
+    logUserInteraction(type: $type, movieId: $movieId, amount: $amount) {
       interactionType
     }
   }
