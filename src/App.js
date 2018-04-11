@@ -16,10 +16,10 @@ const App = props => {
 
   return (
     <React.Fragment>
-      <Header />
       <div className="main-bg">
         <img alt="Landing Page" src="./assets/images/movie-audience-alt2.jpg" />
       </div>
+      <Header />
       {authToken ? (
         <Switch>
           <Route exact path="/" component={Landing} />

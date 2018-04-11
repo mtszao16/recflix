@@ -278,10 +278,25 @@ body {
 }
 
 .main-bg {
-  transform: translate(-50%) scale(0.74);
+  /* transform: translate(-50%) scale(0.74);
   position: absolute;
   top: -126px;
   left: 50%;
+  z-index: -1; */
+  /* background: url(../public/assets/images/movie-audience-alt2.jpg) no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; */
+
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+	
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
   z-index: -1;
 }
 
@@ -311,4 +326,35 @@ body {
   left: 35%;
   font-size: 1000%;
   background-color: transparent;
+}
+
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  font-size: 1.5em;
+  justify-content: space-around;
+  padding: 0 0.2em;
+  text-align: center;
+  width: 5em;
+  float: right;
+  margin: 30px;
+  padding-right: 150px;
+}
+
+.star-rating input {
+  display: none;
+}
+
+.star-rating label {
+  color: #ccc;
+  cursor: pointer;
+}
+
+.star-rating :checked ~ label {
+  color: #f90;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #fc0;
 }
