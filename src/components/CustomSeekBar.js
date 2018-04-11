@@ -1,16 +1,16 @@
-import PropTypes from "prop-types";
-import React, { Component } from "react";
-import classNames from "classnames";
-import { graphql, compose } from "react-apollo";
-import { LOG_INTERACTION } from "../utils/graphql_tags";
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import classNames from 'classnames';
+import { graphql, compose } from 'react-apollo';
+import { LOG_INTERACTION } from '../utils/graphql_tags';
 
 import {
   Slider,
   PlayProgressBar,
   LoadProgressBar,
   MouseTimeDisplay
-} from "video-react";
-import { formatTime } from "../utils";
+} from 'video-react';
+import { formatTime } from '../utils';
 
 const propTypes = {
   player: PropTypes.object,
@@ -69,8 +69,8 @@ class CustomSeekBar extends Component {
     actions.handleEndSeeking(newTime);
     await this.props.logInteraction({
       variables: {
-        time: new Date(),
-        type: "seek"
+        type: 'seek',
+        movieId: '5ac799d477e7d3cc0cfbcfbc'
       }
     });
   }
@@ -105,7 +105,7 @@ class CustomSeekBar extends Component {
         }}
         label="video progress bar"
         className={classNames(
-          "video-react-progress-holder",
+          'video-react-progress-holder',
           this.props.className
         )}
         valuenow={(this.getPercent() * 100).toFixed(2)}
@@ -131,6 +131,6 @@ class CustomSeekBar extends Component {
 
 CustomSeekBar.propTypes = propTypes;
 
-export default compose(graphql(LOG_INTERACTION, { name: "logInteraction" }))(
+export default compose(graphql(LOG_INTERACTION, { name: 'logInteraction' }))(
   CustomSeekBar
 );

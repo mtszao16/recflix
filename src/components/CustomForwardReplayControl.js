@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
-import React, { Component } from "react";
-import classNames from "classnames";
-import { graphql, compose } from "react-apollo";
-import { LOG_INTERACTION } from "../utils/graphql_tags";
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import classNames from 'classnames';
+import { graphql, compose } from 'react-apollo';
+import { LOG_INTERACTION } from '../utils/graphql_tags';
 
 const propTypes = {
   actions: PropTypes.object,
@@ -24,20 +24,20 @@ export default mode => {
     async handleClick() {
       const { actions, seconds } = this.props;
       // Depends mode to implement different actions
-      if (mode === "forward") {
+      if (mode === 'forward') {
         actions.forward(seconds);
         await this.props.logInteraction({
           variables: {
-            time: new Date(),
-            type: "forward"
+            type: 'forward',
+            movieId: '5ac799d477e7d3cc0cfbcfbc'
           }
         });
       } else {
         actions.replay(seconds);
         await this.props.logInteraction({
           variables: {
-            time: new Date(),
-            type: "backward"
+            type: 'backward',
+            movieId: '5ac799d477e7d3cc0cfbcfbc'
           }
         });
       }
@@ -56,7 +56,7 @@ export default mode => {
               [`video-react-icon-${mode}-${seconds}`]: true,
               [`video-react-${mode}-control`]: true
             },
-            "video-react-control video-react-button video-react-icon"
+            'video-react-control video-react-button video-react-icon'
           )}
           onClick={this.handleClick}
         >
@@ -68,7 +68,7 @@ export default mode => {
 
   CustomForwardReplayControl.propTypes = propTypes;
   CustomForwardReplayControl.defaultProps = defaultProps;
-  return compose(graphql(LOG_INTERACTION, { name: "logInteraction" }))(
+  return compose(graphql(LOG_INTERACTION, { name: 'logInteraction' }))(
     CustomForwardReplayControl
   );
 };

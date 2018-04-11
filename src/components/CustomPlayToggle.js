@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import React, { Component } from "react";
-import classNames from "classnames";
-import { graphql, compose } from "react-apollo";
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import classNames from 'classnames';
+import { graphql, compose } from 'react-apollo';
 
-import { LOG_INTERACTION } from "../utils/graphql_tags";
+import { LOG_INTERACTION } from '../utils/graphql_tags';
 const propTypes = {
   actions: PropTypes.object,
   player: PropTypes.object,
@@ -22,16 +22,16 @@ class CustomPlayToggle extends Component {
       actions.play();
       await this.props.logInteraction({
         variables: {
-          time: new Date(),
-          type: "play"
+          type: 'play',
+          movieId: '5ac799d477e7d3cc0cfbcfbc'
         }
       });
     } else {
       actions.pause();
       await this.props.logInteraction({
         variables: {
-          time: new Date(),
-          type: "pause"
+          type: 'pause',
+          movieId: '5ac799d477e7d3cc0cfbcfbc'
         }
       });
     }
@@ -39,7 +39,7 @@ class CustomPlayToggle extends Component {
 
   render() {
     const { player, className } = this.props;
-    const controlText = player.paused ? "Play" : "Pause";
+    const controlText = player.paused ? 'Play' : 'Pause';
 
     return (
       <button
@@ -47,11 +47,11 @@ class CustomPlayToggle extends Component {
           this.button = c;
         }}
         className={classNames(className, {
-          "video-react-play-control": true,
-          "video-react-control": true,
-          "video-react-button": true,
-          "video-react-paused": player.paused,
-          "video-react-playing": !player.paused
+          'video-react-play-control': true,
+          'video-react-control': true,
+          'video-react-button': true,
+          'video-react-paused': player.paused,
+          'video-react-playing': !player.paused
         })}
         tabIndex="0"
         onClick={this.handleClick}
@@ -64,6 +64,6 @@ class CustomPlayToggle extends Component {
 
 CustomPlayToggle.propTypes = propTypes;
 
-export default compose(graphql(LOG_INTERACTION, { name: "logInteraction" }))(
+export default compose(graphql(LOG_INTERACTION, { name: 'logInteraction' }))(
   CustomPlayToggle
 );
