@@ -26,10 +26,12 @@ type User {
 }
 
 type UserInteraction {
+  id: ID!
   interactionTime: String!
   interactionType: String!
   interactedBy: User!
   movieId: String
+  value: Int
 }
 
 type Movie {

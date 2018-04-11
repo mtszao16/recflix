@@ -53,7 +53,7 @@ public class Mutation implements GraphQLRootResolver {
     public UserInteraction logUserInteraction(String type, String movieId, DataFetchingEnvironment env) {
         AuthContext context = env.getContext();
         UserInteraction newUserInteraction = new UserInteraction(Instant.now().atZone(ZoneOffset.UTC), type,
-                context.getUser().getId(), movieId);
+                context.getUser().getId(), movieId, 3);
         return userInteractionRepository.saveUserInteraction(newUserInteraction);
     }
 

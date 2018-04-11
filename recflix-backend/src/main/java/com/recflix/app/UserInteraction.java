@@ -4,16 +4,30 @@ import java.time.ZonedDateTime;
 
 public class UserInteraction {
 
+    private final String id;
     private final ZonedDateTime interactionTime;
     private final String interactionType;
     private final String userId;
     private final String movieId;
+    private final Integer value;
 
-    public UserInteraction(ZonedDateTime interactionTime, String interactionType, String userId, String movieId) {
+    public UserInteraction(ZonedDateTime interactionTime, String interactionType, String userId, String movieId,
+            Integer value) {
+        this(null, interactionTime, interactionType, userId, movieId, value);
+    }
+
+    public UserInteraction(String id, ZonedDateTime interactionTime, String interactionType, String userId,
+            String movieId, Integer value) {
+        this.id = id;
         this.interactionTime = interactionTime;
         this.interactionType = interactionType;
         this.userId = userId;
         this.movieId = movieId;
+        this.value = value;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public ZonedDateTime getInteractionTime() {
@@ -30,5 +44,9 @@ public class UserInteraction {
 
     public String getMovieId() {
         return movieId;
+    }
+
+    public Integer getValue() {
+        return value;
     }
 }

@@ -1,5 +1,6 @@
 package com.recflix.app;
 
+import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
@@ -34,8 +35,12 @@ public class UserInteractionRepository {
 
     public List<UserInteraction> getAllInteractions() {
         List<UserInteraction> allInteractions = new ArrayList<>();
-        for (Document doc : userInteractions.find()) {
-            allInteractions.add(userInteraction(doc));
+        try {
+            for (Document doc : userInteractions.find()) {
+                allInteractions.add(userInteraction(doc));
+            }
+        } catch (MongoException | ClassCastException e) {
+            // log.error("Exception occurred while insert Value using **BasicDBObject** : " + e, e);
         }
         return allInteractions;
     }
@@ -46,14 +51,17 @@ public class UserInteractionRepository {
         doc.append("interactionType", userInteraction.getInteractionType());
         doc.append("interactedBy", userInteraction.getUserId());
         doc.append("movieId", userInteraction.getMovieId());
+        doc.append("value", userInteraction.getValue());
         userInteractions.insertOne(doc);
 
-        return new UserInteraction(ZonedDateTime.parse(doc.getString("interactionTime")),
-                doc.getString("interactionType"), doc.getString("interactedBy"), doc.getString("movieId"));
+        return new UserInteraction(doc.get("_id").toString(), ZonedDateTime.parse(doc.getString("interactionTime")),
+                doc.getString("interactionType"), doc.getString("interactedBy"), doc.getString("movieId"),
+                doc.getInteger("value"));
     }
 
     private UserInteraction userInteraction(Document doc) {
-        return new UserInteraction(ZonedDateTime.parse(doc.getString("interactionTime")),
-                doc.getString("interactionType"), doc.getString("interactedBy"), doc.getString("movieId"));
+        return new UserInteraction(doc.get("_id").toString(), ZonedDateTime.parse(doc.getString("interactionTime")),
+                doc.getString("interactionType"), doc.getString("interactedBy"), doc.getString("movieId"),
+                doc.getInteger("value"));
     }
 }
