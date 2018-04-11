@@ -9,16 +9,16 @@ public class UserInteraction {
     private final String interactionType;
     private final String userId;
     private final String movieId;
-    private final Integer value;
+    private final Double value;
     private final Integer amount;
 
     public UserInteraction(ZonedDateTime interactionTime, String interactionType, String userId, String movieId,
-            Integer value, Integer amount) {
+            Double value, Integer amount) {
         this(null, interactionTime, interactionType, userId, movieId, value, amount);
     }
 
     public UserInteraction(String id, ZonedDateTime interactionTime, String interactionType, String userId,
-            String movieId, Integer value, Integer amount) {
+            String movieId, Double value, Integer amount) {
         this.id = id;
         this.interactionTime = interactionTime;
         this.interactionType = interactionType;
@@ -48,7 +48,7 @@ public class UserInteraction {
         return movieId;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 

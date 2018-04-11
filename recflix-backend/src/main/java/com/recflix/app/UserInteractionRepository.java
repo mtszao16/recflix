@@ -57,12 +57,12 @@ public class UserInteractionRepository {
 
         return new UserInteraction(doc.get("_id").toString(), ZonedDateTime.parse(doc.getString("interactionTime")),
                 doc.getString("interactionType"), doc.getString("interactedBy"), doc.getString("movieId"),
-                doc.getInteger("value"), doc.getInteger("amount"));
+                doc.getDouble("value"), doc.getInteger("amount"));
     }
 
     private UserInteraction userInteraction(Document doc) {
         return new UserInteraction(doc.get("_id").toString(), ZonedDateTime.parse(doc.getString("interactionTime")),
                 doc.getString("interactionType"), doc.getString("interactedBy"), doc.getString("movieId"),
-                doc.getInteger("value"), doc.getInteger("amount"));
+                doc.getDouble("value"), doc.getInteger("amount"));
     }
 }

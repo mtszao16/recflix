@@ -31,7 +31,7 @@ type UserInteraction {
   interactionType: String!
   interactedBy: User!
   movieId: String
-  value: Int
+  value: Float
   amount: Int
 }
 
