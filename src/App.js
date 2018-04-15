@@ -7,6 +7,7 @@ import Display from './components/Display';
 import Header from './components/Header';
 import Auth from './components/Auth';
 import Landing from './components/Landing';
+import About from './components/About';
 import NoMatch from './components/NoMatch';
 
 import { AUTH_TOKEN } from './utils/constants';
@@ -23,6 +24,7 @@ const App = props => {
       {authToken ? (
         <Switch>
           <Route exact path="/" component={Landing} />
+          <Route exact path="/about" component={About} />
           <Route exact path="/login" render={() => <Redirect to="/" />} />
           <Route exact path="/movie" component={Display} />
           <Route component={NoMatch} />
