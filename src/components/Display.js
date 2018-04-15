@@ -1,21 +1,40 @@
 import React, { Component } from 'react';
 import { Player, ControlBar, PlaybackRateMenuButton } from 'video-react';
+import { withRouter } from 'react-router';
+import { graphql, compose } from 'react-apollo';
+import PropTypes from 'prop-types';
 
 import CustomForwardReplayControl from './CustomForwardReplayControl';
 import CustomPlayToggle from './CustomPlayToggle';
 import CustomProgressControl from './CustomProgressControl';
+import { GET_FILTERED_MOVIES } from '../utils/graphql_tags';
+
 const CustomForwardControl = CustomForwardReplayControl('forward');
 const CustomReplayControl = CustomForwardReplayControl('replay');
 
 class Display extends Component {
+  static propTypes = {
+    getMovie: PropTypes.shape({
+      loading: PropTypes.bool,
+      error: PropTypes.object,
+      allMovies: PropTypes.array
+    }).isRequired
+  };
+
   render() {
+    const {
+      getMovie: { allMovies }
+    } = this.props;
     return (
       <div className="container">
+        <h1 className="text-center">
+          {allMovies && allMovies.length > 0 && allMovies[0].name}
+        </h1>
         <div className="video-player">
           <div className="col-sm-12">
             <Player
               disableDefaultControls
-              src="http://res.cloudinary.com/guptautkarsh/video/upload/v1519069513/Binary_tree_traversal_-_breadth-first_and_depth-first_strategies.mp4"
+              src={allMovies && allMovies.length > 0 && allMovies[0].url}
             >
               <ControlBar autoHide>
                 <CustomReplayControl seconds={5} order={2.1} />
@@ -30,25 +49,25 @@ class Display extends Component {
             </Player>
           </div>
         </div>
-        <div class="star-rating">
+        <div className="star-rating">
           <input type="radio" id="5-stars" name="rating" value="5" />
-          <label for="5-stars" class="star">
+          <label htmlFor="5-stars" className="star">
             &#9733;
           </label>
           <input type="radio" id="4-stars" name="rating" value="4" />
-          <label for="4-stars" class="star">
+          <label htmlFor="4-stars" className="star">
             &#9733;
           </label>
           <input type="radio" id="3-stars" name="rating" value="3" />
-          <label for="3-stars" class="star">
+          <label htmlFor="3-stars" className="star">
             &#9733;
           </label>
           <input type="radio" id="2-stars" name="rating" value="2" />
-          <label for="2-stars" class="star">
+          <label htmlFor="2-stars" className="star">
             &#9733;
           </label>
           <input type="radio" id="1-star" name="rating" value="1" />
-          <label for="1-star" class="star">
+          <label htmlFor="1-star" className="star">
             &#9733;
           </label>
         </div>
@@ -57,4 +76,15 @@ class Display extends Component {
   }
 }
 
-export default Display;
+export default compose(
+  graphql(GET_FILTERED_MOVIES, {
+    name: 'getMovie',
+    options: props => ({
+      variables: {
+        filter: {
+          id: props.match.params.movieId
+        }
+      }
+    })
+  })
+)(withRouter(Display));

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import { withRouter } from 'react-router';
 import { graphql, compose } from 'react-apollo';
 import { LOG_INTERACTION } from '../utils/graphql_tags';
 
@@ -22,14 +23,14 @@ export default mode => {
     }
 
     async handleClick() {
-      const { actions, seconds } = this.props;
+      const { actions, seconds, match } = this.props;
       // Depends mode to implement different actions
       if (mode === 'forward') {
         actions.forward(seconds);
         await this.props.logInteraction({
           variables: {
             type: 'forward',
-            movieId: '5ac799d477e7d3cc0cfbcfbc'
+            movieId: match.params.movieId
           }
         });
       } else {
@@ -37,7 +38,7 @@ export default mode => {
         await this.props.logInteraction({
           variables: {
             type: 'backward',
-            movieId: '5ac799d477e7d3cc0cfbcfbc'
+            movieId: match.params.movieId
           }
         });
       }
@@ -69,6 +70,6 @@ export default mode => {
   CustomForwardReplayControl.propTypes = propTypes;
   CustomForwardReplayControl.defaultProps = defaultProps;
   return compose(graphql(LOG_INTERACTION, { name: 'logInteraction' }))(
-    CustomForwardReplayControl
+    withRouter(CustomForwardReplayControl)
   );
 };

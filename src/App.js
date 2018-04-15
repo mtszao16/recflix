@@ -26,7 +26,7 @@ const App = props => {
           <Route exact path="/" component={Landing} />
           <Route exact path="/about" component={About} />
           <Route exact path="/login" render={() => <Redirect to="/" />} />
-          <Route exact path="/movie" component={Display} />
+          <Route path="/movie/:movieId" component={Display} />
           <Route component={NoMatch} />
         </Switch>
       ) : (

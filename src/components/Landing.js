@@ -1,34 +1,45 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import { graphql, compose } from 'react-apollo';
+import PropTypes from 'prop-types';
+import { GET_ALL_MOVIES } from '../utils/graphql_tags';
 
 class Landing extends Component {
+  static propTypes = {
+    getAllMovies: PropTypes.shape({
+      loading: PropTypes.bool,
+      error: PropTypes.object,
+      allMovies: PropTypes.array
+    }).isRequired
+  };
+
   render() {
+    const {
+      getAllMovies: { allMovies }
+    } = this.props;
     return (
-      <div className="text-center">
-        <h1>Team</h1>
-        <div className="row">
-          <div className="col col-md-4">
-            <h4>Utkarsh Kumar Gupta</h4>
-            <p>Hacker</p>
-          </div>
-          <div className="col col-md-4">
-            <h4>Sumit Kumar</h4>
-            <p>Data Scientist</p>
-          </div>
-          <div className="col col-md-4">
-            <h4>Anand Preet Samuel</h4>
-            <p>Designer</p>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col col-md-12 text-center">
-            <h4>Himanshu Sahu</h4>
-            <p>Mentor</p>
-          </div>
-        </div>
+      <div>
+        {allMovies &&
+          allMovies.map(movie => (
+            <div key={movie.id} className="card" style={{ width: '18rem' }}>
+              <img className="card-img-top" src="." alt="Card image cap" />
+              <div className="card-body">
+                <h5
+                  className="card-title"
+                  onClick={() => {
+                    this.props.history.push(`/movie/${movie.id}`);
+                  }}
+                >
+                  Card title
+                </h5>
+              </div>
+            </div>
+          ))}
       </div>
     );
   }
 }
 
-export default withRouter(Landing);
+export default compose(graphql(GET_ALL_MOVIES, { name: 'getAllMovies' }))(
+  withRouter(Landing)
+);

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import classNames from 'classnames';
 import { graphql, compose } from 'react-apollo';
 import { LOG_INTERACTION } from '../utils/graphql_tags';
@@ -51,7 +52,9 @@ class CustomSeekBar extends Component {
   }
 
   getNewTime(event) {
-    const { player: { duration, currentTime } } = this.props;
+    const {
+      player: { duration, currentTime }
+    } = this.props;
     const distance = this.slider.calculateDistance(event);
     const newTime = distance * duration;
 
@@ -65,7 +68,11 @@ class CustomSeekBar extends Component {
   handleMouseDown() {}
 
   async handleMouseUp(event) {
-    const { actions, player: { currentTime } } = this.props;
+    const {
+      actions,
+      player: { currentTime },
+      match
+    } = this.props;
     const newTime = this.getNewTime(event);
     // Set new time (tell video to seek to new time)
     actions.seek(newTime);
@@ -79,7 +86,7 @@ class CustomSeekBar extends Component {
     await this.props.logInteraction({
       variables: {
         type: `${this.state.direction} seek`,
-        movieId: '5ac799d477e7d3cc0cfbcfbc',
+        movieId: match.params.movieId,
         amount: duration
       }
     });
@@ -92,23 +99,23 @@ class CustomSeekBar extends Component {
   }
 
   async stepForward() {
-    const { actions } = this.props;
+    const { actions, match } = this.props;
     actions.forward(5);
     await this.props.logInteraction({
       variables: {
         type: 'forward',
-        movieId: '5ac799d477e7d3cc0cfbcfbc'
+        movieId: match.params.movieId
       }
     });
   }
 
   async stepBack() {
-    const { actions } = this.props;
+    const { actions, match } = this.props;
     actions.replay(5);
     await this.props.logInteraction({
       variables: {
         type: 'backward',
-        movieId: '5ac799d477e7d3cc0cfbcfbc'
+        movieId: match.params.movieId
       }
     });
   }
@@ -154,5 +161,5 @@ class CustomSeekBar extends Component {
 CustomSeekBar.propTypes = propTypes;
 
 export default compose(graphql(LOG_INTERACTION, { name: 'logInteraction' }))(
-  CustomSeekBar
+  withRouter(CustomSeekBar)
 );

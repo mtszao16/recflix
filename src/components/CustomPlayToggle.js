@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import classNames from 'classnames';
 import { graphql, compose } from 'react-apollo';
 
@@ -17,13 +18,13 @@ class CustomPlayToggle extends Component {
   }
 
   async handleClick() {
-    const { actions, player } = this.props;
+    const { actions, player, match } = this.props;
     if (player.paused) {
       actions.play();
       await this.props.logInteraction({
         variables: {
           type: 'play',
-          movieId: '5ac799d477e7d3cc0cfbcfbc'
+          movieId: match.params.movieId
         }
       });
     } else {
@@ -31,7 +32,7 @@ class CustomPlayToggle extends Component {
       await this.props.logInteraction({
         variables: {
           type: 'pause',
-          movieId: '5ac799d477e7d3cc0cfbcfbc'
+          movieId: match.params.movieId
         }
       });
     }
@@ -65,5 +66,5 @@ class CustomPlayToggle extends Component {
 CustomPlayToggle.propTypes = propTypes;
 
 export default compose(graphql(LOG_INTERACTION, { name: 'logInteraction' }))(
-  CustomPlayToggle
+  withRouter(CustomPlayToggle)
 );

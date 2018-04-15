@@ -27,3 +27,23 @@ export const SIGNIN_MUTATION = gql`
     }
   }
 `;
+
+export const GET_ALL_MOVIES = gql`
+  query GetAllMovies {
+    allMovies {
+      id
+      name
+      url
+    }
+  }
+`;
+
+export const GET_FILTERED_MOVIES = gql`
+  query GetAllMovies($filter: MovieFilter) {
+    allMovies(filter: $filter) {
+      id
+      name
+      url
+    }
+  }
+`;
