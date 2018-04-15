@@ -1,13 +1,18 @@
 package com.recflix.app;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.FindIterable;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.regex;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 
 /**
@@ -38,11 +43,32 @@ public class MovieRepository {
         return new Movie(doc.get("_id").toString(), doc.getString("name"), doc.getString("url"));
     }
 
-    public List<Movie> getAllMovies() {
+    public List<Movie> getAllMovies(MovieFilter filter) {
+        Optional<Bson> mongoFilter = Optional.ofNullable(filter).map(this::buildFilter);
+
         List<Movie> allMovies = new ArrayList<>();
-        for (Document doc : movies.find()) {
+        FindIterable<Document> documents = mongoFilter.map(movies::find).orElseGet(movies::find);
+        for (Document doc : documents) {
             allMovies.add(movie(doc));
         }
         return allMovies;
+    }
+
+    private Bson buildFilter(MovieFilter filter) {
+        String idPattern = filter.getId();
+        String namePattern = filter.getName();
+        Bson idCondition = null;
+        Bson nameCondition = null;
+        if (idPattern != null && !idPattern.isEmpty()) {
+            idCondition = eq("_id", new ObjectId(idPattern));
+        }
+        if (namePattern != null && !namePattern.isEmpty()) {
+            nameCondition = regex("name", ".*" + namePattern + ".*", "i");
+        }
+        if (idCondition != null && nameCondition != null) {
+            return and(idCondition, nameCondition);
+        }
+
+        return idCondition != null ? idCondition : nameCondition;
     }
 }

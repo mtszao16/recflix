@@ -27,8 +27,8 @@ public class Query implements GraphQLRootResolver {
         return userInteractionRepository.getAllInteractions();
     }
 
-    public List<Movie> allMovies() {
-        return movieRepository.getAllMovies();
+    public List<Movie> allMovies(MovieFilter filter) {
+        return movieRepository.getAllMovies(filter);
     }
 
     public List<Feedback> allFeedbacks() {
