@@ -39,8 +39,8 @@ public class Mutation implements GraphQLRootResolver {
         return userRepository.saveUser(newUser);
     }
 
-    public Movie addMovie(String name, String url) {
-        Movie newMovie = new Movie(name, url);
+    public Movie addMovie(String name, String url, Integer totalDuration) {
+        Movie newMovie = new Movie(name, url, totalDuration);
         return movieRepository.saveMovie(newMovie);
     }
 
@@ -51,9 +51,11 @@ public class Mutation implements GraphQLRootResolver {
         return feedbackRepository.saveFeedback(newFeedback);
     }
 
-    public UserInteraction logUserInteraction(String type, String movieId, Integer amount, DataFetchingEnvironment env) {
+    public UserInteraction logUserInteraction(String type, String movieId, Integer amount,
+            DataFetchingEnvironment env) {
         AuthContext context = env.getContext();
-        Double weightedValue = MathUtils.computeWeightedValueForUserInteraction(type, movieId, context.getUser().getId(), amount);
+        Double weightedValue = MathUtils.computeWeightedValueForUserInteraction(type, movieId,
+                context.getUser().getId(), amount);
         UserInteraction newUserInteraction = new UserInteraction(Instant.now().atZone(ZoneOffset.UTC), type,
                 context.getUser().getId(), movieId, weightedValue, amount);
         return userInteractionRepository.saveUserInteraction(newUserInteraction);

@@ -35,12 +35,14 @@ public class MovieRepository {
         Document doc = new Document();
         doc.append("name", movie.getName());
         doc.append("url", movie.getUrl());
+        doc.append("totalDuration", movie.getTotalDuration());
         movies.insertOne(doc);
-        return new Movie(doc.get("_id").toString(), movie.getName(), movie.getUrl());
+        return new Movie(doc.get("_id").toString(), movie.getName(), movie.getUrl(), movie.getTotalDuration());
     }
 
     private Movie movie(Document doc) {
-        return new Movie(doc.get("_id").toString(), doc.getString("name"), doc.getString("url"));
+        return new Movie(doc.get("_id").toString(), doc.getString("name"), doc.getString("url"),
+                doc.getInteger("totalDuration"));
     }
 
     public List<Movie> getAllMovies(MovieFilter filter) {

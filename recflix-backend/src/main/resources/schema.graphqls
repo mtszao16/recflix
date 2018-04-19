@@ -18,7 +18,7 @@ type Mutation {
     movieId: String
     amount: Int
   ): UserInteraction
-  addMovie(name: String!, url: String): Movie
+  addMovie(name: String!, url: String, totalDuration: Int): Movie
   recordFeedback(rating: Int!, type: String, movieId: String): Feedback
 }
 
@@ -43,6 +43,7 @@ type Movie {
   id: ID!
   name: String!
   url: String
+  totalDuration: Int
 }
 
 type Feedback {
