@@ -1,12 +1,12 @@
 # RECFLIX
 
-**A movie streaming system that uses an integrated architecture of movie recommender system which considers user behaviour, interactions, and understanding patterns developed to recommend movies to the user. This architecture analyses and transforms user behaviour into implicit ratings.**
-
 <h1 align="center">
 	<img width="300" src="https://raw.githubusercontent.com/UtkarshGupta-CS/recflix/master/public/assets/images/recflixlogo.png" alt="RECFLIX">
 	<br>
-	<br>
 </h1>
+
+**A movie streaming system that uses an integrated architecture of movie recommender system which considers user behaviour, interactions, and understanding patterns developed to recommend movies to the user. This architecture analyses and transforms user behaviour into implicit ratings.**
+
 ### Usage
 
     mvn jetty:run
