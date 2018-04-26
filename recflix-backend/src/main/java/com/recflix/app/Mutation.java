@@ -7,6 +7,7 @@ import com.recflix.utils.MathUtils;
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -37,6 +38,13 @@ public class Mutation implements GraphQLRootResolver {
     public User createUser(String name, AuthData auth) {
         User newUser = new User(name, auth.getEmail(), auth.getPassword());
         return userRepository.saveUser(newUser);
+    }
+
+    public Boolean addWatchedMovie(String movieId, String userId) {
+
+        Movie movie = movieRepository.findById(movieId);
+        userRepository.saveWatchedMovie(movie, userId);
+        return true;
     }
 
     public Movie addMovie(String name, String url, Integer totalDuration) {

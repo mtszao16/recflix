@@ -27,12 +27,15 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
     private static final UserInteractionRepository userInteractionRepository;
     private static final MovieRepository movieRepository;
     private static final FeedbackRepository feedbackRepository;
+    private static final WatchedMovieRepository watchedMovieRepository;
+
     static {
         MongoDatabase mongo = new MongoClient().getDatabase("recflix");
         userRepository = new UserRepository(mongo.getCollection("users"));
         userInteractionRepository = new UserInteractionRepository(mongo.getCollection("userInteractions"));
         movieRepository = new MovieRepository(mongo.getCollection("movies"));
         feedbackRepository = new FeedbackRepository(mongo.getCollection("feedbacks"));
+        watchedMovieRepository = new WatchedMovieRepository(mongo.getCollection("users"));
     }
 
     public GraphQLEndpoint() {
@@ -44,7 +47,7 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
                 .resolvers(new Query(userRepository, userInteractionRepository, movieRepository, feedbackRepository),
                         new Mutation(userRepository, userInteractionRepository, movieRepository, feedbackRepository),
                         new SigninResolver(), new UserInteractionResolver(userRepository),
-                        new FeedbackResolver(userRepository, movieRepository))
+                        new FeedbackResolver(userRepository, movieRepository), new UserResolver(watchedMovieRepository))
                 .scalars(Scalars.dateTime).build().makeExecutableSchema();
     }
 

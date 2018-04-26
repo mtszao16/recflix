@@ -20,13 +20,15 @@ type Mutation {
   ): UserInteraction
   addMovie(name: String!, url: String, totalDuration: Int): Movie
   recordFeedback(rating: Int!, type: String, movieId: String): Feedback
+  addWatchedMovie(movieId: String!, userId: String!): Boolean
 }
 
-type User {
+extend type User {
   id: ID!
   name: String!
   email: String
   password: String
+  watchedMovies: [WatchedMovie]
 }
 
 type UserInteraction {
@@ -44,6 +46,15 @@ type Movie {
   name: String!
   url: String
   totalDuration: Int
+}
+
+type WatchedMovie {
+  id: ID!
+  name: String!
+  url: String
+  totalDuration: Int
+  watchedCount: Int
+  watchedDuration: Int
 }
 
 type Feedback {

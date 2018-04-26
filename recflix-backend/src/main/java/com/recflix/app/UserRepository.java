@@ -1,13 +1,14 @@
 package com.recflix.app;
 
 import com.recflix.utils.HashString;
-
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Updates;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Projections.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -39,8 +40,39 @@ public class UserRepository {
         doc.append("name", user.getName());
         doc.append("email", user.getEmail());
         doc.append("password", hashedPassword);
+        doc.append("watchedMovies", new ArrayList<WatchedMovie>());
         users.insertOne(doc);
         return new User(doc.get("_id").toString(), user.getName(), user.getEmail(), hashedPassword);
+    }
+
+    public void saveWatchedMovie(Movie movie, String userId) {
+        List<Document> watchedMoviesDocs = (List<Document>) users.find(eq("_id", new ObjectId(userId)))
+                .projection(fields(include("watchedMovies"))).map(document -> document.get("watchedMovies")).first();
+
+        Document movieSpec = new Document();
+        Boolean movieAlreadyWatched = false;
+
+        for (Document el : watchedMoviesDocs) {
+            if (new String(el.get("_id").toString()).equals(movie.getId().toString())) {
+                movieAlreadyWatched = true;
+                el.put("watchedCount", el.getInteger("watchedCount") + 1);
+                el.put("watchedDuration", el.getInteger("watchedDuration") + 1);
+                System.out.println(el.getInteger("watchedCount") + el.getInteger("watchedDuration"));
+                break;
+            }
+        }
+
+        if (!movieAlreadyWatched) {
+            movieSpec.append("_id", movie.getId());
+            movieSpec.append("name", movie.getName());
+            movieSpec.append("totalDuration", movie.getTotalDuration());
+            movieSpec.append("url", movie.getUrl());
+            movieSpec.append("watchedCount", 1);
+            movieSpec.append("watchedDuration", 1);
+            users.updateOne(eq("_id", new ObjectId(userId)), Updates.push("watchedMovies", movieSpec));
+        } else {
+            users.updateOne(eq("_id", new ObjectId(userId)), Updates.set("watchedMovies", watchedMoviesDocs));
+        }
     }
 
     private User user(Document doc) {
