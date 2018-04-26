@@ -47,3 +47,9 @@ export const GET_FILTERED_MOVIES = gql`
     }
   }
 `;
+
+export const ADD_WATCHED_MOVIE_MUTATION = gql`
+  mutation AddWatchedMovieMutation($movieId: String!, $userId: String!) {
+    addWatchedMovie(movieId: $movieId, userId: $userId)
+  }
+`;
