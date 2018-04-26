@@ -57,7 +57,6 @@ public class UserRepository {
                 movieAlreadyWatched = true;
                 el.put("watchedCount", el.getInteger("watchedCount") + 1);
                 el.put("watchedDuration", el.getInteger("watchedDuration") + 1);
-                System.out.println(el.getInteger("watchedCount") + el.getInteger("watchedDuration"));
                 break;
             }
         }
