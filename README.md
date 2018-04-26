@@ -1,1 +1,21 @@
 # recflix
+
+**A movie streaming system that uses an integrated architecture of movie recommender system which considers user behaviour, interactions, and understanding patterns developed to recommend movies to the user. This architecture analyses and transforms user behaviour into implicit ratings.**
+
+### Usage
+
+    mvn jetty:run
+
+### TODO
+
+* [ ] Added check for returning passwords User type in graphql schema
+
+### Collaborators
+
+* [**Utkarsh Gupta**](https://github.com/UtkarshGupta-CS), <https://twitter.com/utkarshgupta97>
+* [**Anand Samuel**](https://github.com/AndyPSam)
+* [**Sumit Kumar**](https://github.com/sumit1202)
+
+## License
+
+Licensed under [MIT](./LICENSE).
