@@ -27,10 +27,17 @@ public class WatchedMovieRepository {
 
         List<Document> watchedMoviesDocs = (List<Document>) users.find(Filters.eq("_id", new ObjectId(userId)))
                 .projection(fields(include("watchedMovies"))).map(document -> document.get("watchedMovies")).first();
+
+        if (watchedMoviesDocs == null) {
+            return new ArrayList<WatchedMovie>();
+        }
+
         for (Document el : watchedMoviesDocs) {
+            System.out.println(el);
             watchedMovies.add(new WatchedMovie(el.get("_id").toString(), el.getString("name"), el.getString("url"),
                     el.getInteger("totalDuration"), el.getInteger("watchedCount"), el.getInteger("watchedDuration")));
         }
+
         return watchedMovies;
     }
 }
