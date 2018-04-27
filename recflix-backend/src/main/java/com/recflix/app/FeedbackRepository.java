@@ -62,8 +62,11 @@ public class FeedbackRepository {
             doc.append("createdAt", Scalars.dateTime.getCoercing().serialize(feedback.getCreatedAt()));
             feedbacks.insertOne(doc);
         } else {
-            feedbacks.updateOne(and(eq("userId", feedback.getUserId()), eq("movieId", feedback.getMovieId())),
+            doc = feedbacks.findOneAndUpdate(
+                    and(eq("userId", feedback.getUserId()), eq("movieId", feedback.getMovieId())),
                     Updates.set("rating", feedback.getRating()));
+            return new Feedback(doc.get("_id").toString(), doc.getInteger("rating"), doc.getString("type"),
+                    ZonedDateTime.parse(doc.getString("createdAt")), doc.getString("userId"), doc.getString("movieId"));
         }
 
         return new Feedback(doc.get("_id").toString(), doc.getInteger("rating"), doc.getString("type"),
