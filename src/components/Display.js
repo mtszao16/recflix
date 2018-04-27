@@ -7,7 +7,10 @@ import PropTypes from 'prop-types';
 import CustomForwardReplayControl from './CustomForwardReplayControl';
 import CustomPlayToggle from './CustomPlayToggle';
 import CustomProgressControl from './CustomProgressControl';
-import { GET_FILTERED_MOVIES } from '../utils/graphql_tags';
+import {
+  GET_FILTERED_MOVIES,
+  RECORD_FEEDBACK_MUTATION
+} from '../utils/graphql_tags';
 
 const CustomForwardControl = CustomForwardReplayControl('forward');
 const CustomReplayControl = CustomForwardReplayControl('replay');
@@ -19,6 +22,21 @@ class Display extends Component {
       error: PropTypes.object,
       allMovies: PropTypes.array
     }).isRequired
+  };
+
+  state = {
+    selectedRating: ''
+  };
+
+  onRatingChange = event => {
+    this.setState({ selectedRating: event.target.value });
+    this.props.recordFeedback({
+      variables: {
+        rating: event.target.value,
+        type: 'explicit',
+        movieId: this.props.match.params.movieId
+      }
+    });
   };
 
   render() {
@@ -49,28 +67,65 @@ class Display extends Component {
             </Player>
           </div>
         </div>
-        <div className="star-rating">
-          <input type="radio" id="5-stars" name="rating" value="5" />
-          <label htmlFor="5-stars" className="star">
-            &#9733;
-          </label>
-          <input type="radio" id="4-stars" name="rating" value="4" />
-          <label htmlFor="4-stars" className="star">
-            &#9733;
-          </label>
-          <input type="radio" id="3-stars" name="rating" value="3" />
-          <label htmlFor="3-stars" className="star">
-            &#9733;
-          </label>
-          <input type="radio" id="2-stars" name="rating" value="2" />
-          <label htmlFor="2-stars" className="star">
-            &#9733;
-          </label>
-          <input type="radio" id="1-star" name="rating" value="1" />
-          <label htmlFor="1-star" className="star">
-            &#9733;
-          </label>
-        </div>
+        <form>
+          <div className="star-rating">
+            <input
+              type="radio"
+              id="5-stars"
+              name="rating"
+              value="5"
+              checked={this.state.selectedRating.toString() === '5'}
+              onChange={this.onRatingChange}
+            />
+            <label htmlFor="5-stars" className="star">
+              &#9733;
+            </label>
+            <input
+              type="radio"
+              id="4-stars"
+              name="rating"
+              value="4"
+              checked={this.state.selectedRating.toString() === '4'}
+              onChange={this.onRatingChange}
+            />
+            <label htmlFor="4-stars" className="star">
+              &#9733;
+            </label>
+            <input
+              type="radio"
+              id="3-stars"
+              name="rating"
+              value="3"
+              checked={this.state.selectedRating.toString() === '3'}
+              onChange={this.onRatingChange}
+            />
+            <label htmlFor="3-stars" className="star">
+              &#9733;
+            </label>
+            <input
+              type="radio"
+              id="2-stars"
+              name="rating"
+              value="2"
+              checked={this.state.selectedRating.toString() === '2'}
+              onChange={this.onRatingChange}
+            />
+            <label htmlFor="2-stars" className="star">
+              &#9733;
+            </label>
+            <input
+              type="radio"
+              id="1-star"
+              name="rating"
+              value="1"
+              checked={this.state.selectedRating.toString() === '1'}
+              onChange={this.onRatingChange}
+            />
+            <label htmlFor="1-star" className="star">
+              &#9733;
+            </label>
+          </div>
+        </form>
       </div>
     );
   }
@@ -86,5 +141,8 @@ export default compose(
         }
       }
     })
+  }),
+  graphql(RECORD_FEEDBACK_MUTATION, {
+    name: 'recordFeedback'
   })
 )(withRouter(Display));
