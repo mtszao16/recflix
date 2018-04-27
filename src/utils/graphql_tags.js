@@ -69,3 +69,15 @@ export const RECORD_FEEDBACK_MUTATION = gql`
     }
   }
 `;
+
+export const GET_FILTERED_FEEDBACKS = gql`
+  query GetAllFeedbacks($filter: FeedbackFilter) {
+    allFeedbacks(filter: $filter) {
+      id
+      rating
+      createdAt
+      movieId
+      userId
+    }
+  }
+`;

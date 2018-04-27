@@ -7,10 +7,13 @@ import PropTypes from 'prop-types';
 import CustomForwardReplayControl from './CustomForwardReplayControl';
 import CustomPlayToggle from './CustomPlayToggle';
 import CustomProgressControl from './CustomProgressControl';
+
 import {
   GET_FILTERED_MOVIES,
-  RECORD_FEEDBACK_MUTATION
+  RECORD_FEEDBACK_MUTATION,
+  GET_FILTERED_FEEDBACKS
 } from '../utils/graphql_tags';
+import { getUserId } from '../utils/jwtutils';
 
 const CustomForwardControl = CustomForwardReplayControl('forward');
 const CustomReplayControl = CustomForwardReplayControl('replay');
@@ -21,12 +24,39 @@ class Display extends Component {
       loading: PropTypes.bool,
       error: PropTypes.object,
       allMovies: PropTypes.array
+    }).isRequired,
+    getFeedback: PropTypes.shape({
+      loading: PropTypes.bool,
+      error: PropTypes.object,
+      allFeedbacks: PropTypes.array
     }).isRequired
   };
 
-  state = {
-    selectedRating: ''
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedRating: null
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      nextProps.getFeedback &&
+      nextProps.getFeedback.allFeedbacks &&
+      nextProps.getFeedback.allFeedbacks.length > 0 &&
+      nextProps.getFeedback.allFeedbacks[0].rating === prevState.selectedRating
+    ) {
+      return null;
+    }
+
+    return {
+      selectedRating:
+        nextProps.getFeedback &&
+        nextProps.getFeedback.allFeedbacks &&
+        nextProps.getFeedback.allFeedbacks.length > 0 &&
+        nextProps.getFeedback.allFeedbacks[0].rating
+    };
+  }
 
   onRatingChange = event => {
     this.setState({ selectedRating: event.target.value });
@@ -74,7 +104,7 @@ class Display extends Component {
               id="5-stars"
               name="rating"
               value="5"
-              checked={this.state.selectedRating.toString() === '5'}
+              checked={this.state.selectedRating == 5}
               onChange={this.onRatingChange}
             />
             <label htmlFor="5-stars" className="star">
@@ -85,7 +115,7 @@ class Display extends Component {
               id="4-stars"
               name="rating"
               value="4"
-              checked={this.state.selectedRating.toString() === '4'}
+              checked={this.state.selectedRating == 4}
               onChange={this.onRatingChange}
             />
             <label htmlFor="4-stars" className="star">
@@ -96,7 +126,7 @@ class Display extends Component {
               id="3-stars"
               name="rating"
               value="3"
-              checked={this.state.selectedRating.toString() === '3'}
+              checked={this.state.selectedRating == 3}
               onChange={this.onRatingChange}
             />
             <label htmlFor="3-stars" className="star">
@@ -107,7 +137,7 @@ class Display extends Component {
               id="2-stars"
               name="rating"
               value="2"
-              checked={this.state.selectedRating.toString() === '2'}
+              checked={this.state.selectedRating == 2}
               onChange={this.onRatingChange}
             />
             <label htmlFor="2-stars" className="star">
@@ -118,7 +148,7 @@ class Display extends Component {
               id="1-star"
               name="rating"
               value="1"
-              checked={this.state.selectedRating.toString() === '1'}
+              checked={this.state.selectedRating == 1}
               onChange={this.onRatingChange}
             />
             <label htmlFor="1-star" className="star">
@@ -138,6 +168,17 @@ export default compose(
       variables: {
         filter: {
           id: props.match.params.movieId
+        }
+      }
+    })
+  }),
+  graphql(GET_FILTERED_FEEDBACKS, {
+    name: 'getFeedback',
+    options: props => ({
+      variables: {
+        filter: {
+          movieId: props.match.params.movieId,
+          userId: getUserId()
         }
       }
     })

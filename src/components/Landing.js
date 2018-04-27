@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { graphql, compose } from 'react-apollo';
-import jwt from 'jsonwebtoken';
-import { AUTH_TOKEN } from '../utils/constants';
 import PropTypes from 'prop-types';
+
 import {
   GET_ALL_MOVIES,
   ADD_WATCHED_MOVIE_MUTATION
 } from '../utils/graphql_tags';
+import { getUserId } from '../utils/jwtutils';
 
 class Landing extends Component {
   static propTypes = {
@@ -32,12 +32,10 @@ class Landing extends Component {
                 <h5
                   className="card-title"
                   onClick={() => {
-                    const authToken = localStorage.getItem(AUTH_TOKEN);
-                    const decoded = jwt.decode(authToken);
                     this.props.addWatchedMovie({
                       variables: {
                         movieId: movie.id,
-                        userId: decoded.userId
+                        userId: getUserId()
                       }
                     });
                     this.props.history.push(`/movie/${movie.id}`);
