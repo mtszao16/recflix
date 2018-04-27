@@ -7,7 +7,7 @@ type Query {
   allUsers: [User]
   allUserInteractions: [UserInteraction]
   allMovies(filter: MovieFilter): [Movie]
-  allFeedbacks: [Feedback]
+  allFeedbacks(filter: FeedbackFilter): [Feedback]
 }
 
 type Mutation {
@@ -79,6 +79,12 @@ input AuthData {
 input MovieFilter {
   id: ID
   name: String
+}
+
+input FeedbackFilter {
+  id: ID
+  userId: String
+  movieId: String
 }
 
 scalar DateTime

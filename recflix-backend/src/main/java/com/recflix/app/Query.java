@@ -31,7 +31,7 @@ public class Query implements GraphQLRootResolver {
         return movieRepository.getAllMovies(filter);
     }
 
-    public List<Feedback> allFeedbacks() {
-        return feedbackRepository.getAllFeedbacks();
+    public List<Feedback> allFeedbacks(FeedbackFilter filter) {
+        return feedbackRepository.getAllFeedbacks(filter);
     }
 }

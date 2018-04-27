@@ -5,11 +5,13 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.and;
@@ -30,9 +32,13 @@ public class FeedbackRepository {
         return feedback(doc);
     }
 
-    public List<Feedback> getAllFeedbacks() {
+    public List<Feedback> getAllFeedbacks(FeedbackFilter filter) {
+        Optional<Bson> mongoFilter = Optional.ofNullable(filter).map(this::buildFilter);
         List<Feedback> allFeedbacks = new ArrayList<>();
-        for (Document doc : feedbacks.find()) {
+
+        FindIterable<Document> documents = mongoFilter.map(feedbacks::find).orElseGet(feedbacks::find);
+
+        for (Document doc : documents) {
             allFeedbacks.add(feedback(doc));
         }
         return allFeedbacks;
@@ -67,5 +73,44 @@ public class FeedbackRepository {
     private Feedback feedback(Document doc) {
         return new Feedback(doc.get("_id").toString(), doc.getInteger("rating"), doc.getString("type"),
                 ZonedDateTime.parse(doc.getString("createdAt")), doc.getString("userId"), doc.getString("movieId"));
+    }
+
+    private Bson buildFilter(FeedbackFilter filter) {
+        String idPattern = filter.getId();
+        String movieIdPattern = filter.getMovieId();
+        String userIdPattern = filter.getUserId();
+        Bson idCondition = null;
+        Bson movieIdCondition = null;
+        Bson userIdCondition = null;
+
+        if (idPattern != null && !idPattern.isEmpty()) {
+            idCondition = eq("_id", new ObjectId(idPattern));
+        }
+
+        if (movieIdPattern != null && !movieIdPattern.isEmpty()) {
+            movieIdCondition = eq("movieId", movieIdPattern);
+        }
+
+        if (userIdPattern != null && !userIdPattern.isEmpty()) {
+            userIdCondition = eq("userId", userIdPattern);
+        }
+
+        if (idCondition != null && movieIdCondition != null && userIdCondition != null) {
+            return and(idCondition, movieIdCondition, userIdCondition);
+        }
+
+        if (idCondition != null && movieIdCondition != null && userIdCondition == null) {
+            return and(idCondition, movieIdCondition);
+        }
+
+        if (idCondition != null && movieIdCondition == null && userIdCondition != null) {
+            return and(idCondition, userIdCondition);
+        }
+
+        if (idCondition == null && movieIdCondition != null && userIdCondition != null) {
+            return and(movieIdCondition, userIdCondition);
+        }
+
+        return idCondition != null ? idCondition : userIdCondition;
     }
 }
