@@ -2,7 +2,6 @@ package com.recflix.app;
 
 import com.recflix.utils.AuthUtils;
 import com.recflix.utils.HashString;
-import com.recflix.utils.MathUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
@@ -62,10 +61,8 @@ public class Mutation implements GraphQLRootResolver {
     public UserInteraction logUserInteraction(String type, String movieId, Integer amount,
             DataFetchingEnvironment env) {
         AuthContext context = env.getContext();
-        Double weightedValue = MathUtils.computeWeightedValueForUserInteraction(type, movieId,
-                context.getUser().getId(), amount);
         UserInteraction newUserInteraction = new UserInteraction(Instant.now().atZone(ZoneOffset.UTC), type,
-                context.getUser().getId(), movieId, weightedValue, amount);
+                context.getUser().getId(), movieId, 1.1, amount);
         return userInteractionRepository.saveUserInteraction(newUserInteraction);
     }
 
