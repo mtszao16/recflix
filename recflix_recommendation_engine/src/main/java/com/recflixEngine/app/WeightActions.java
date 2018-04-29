@@ -5,6 +5,8 @@ package com.recflixEngine.app;
  */
 public class WeightActions {
 
+    private final String userId;
+    private final String movieId;
     private final double explicitRating;
     private final double recomdToUserWt;
     private final double addFavWt;
@@ -17,9 +19,11 @@ public class WeightActions {
     private final double fwdSeekWt;
     private final double viewWt;
 
-    public WeightActions(double explicitRating, double recomdToUserWt, double addFavWt, double watchLstWt,
-            double remFavWt, double timeSpendWt, double bckCntrlWt, double fwdCntrlWt, double bckSeekWt,
-            double fwdSeekWt, double viewWt) {
+    public WeightActions(String userId, String movieId, double explicitRating, double recomdToUserWt, double addFavWt,
+            double watchLstWt, double remFavWt, double timeSpendWt, double bckCntrlWt, double fwdCntrlWt,
+            double bckSeekWt, double fwdSeekWt, double viewWt) {
+        this.userId = userId;
+        this.movieId = movieId;
         this.explicitRating = explicitRating;
         this.recomdToUserWt = recomdToUserWt;
         this.addFavWt = addFavWt;
@@ -31,6 +35,14 @@ public class WeightActions {
         this.bckSeekWt = bckSeekWt;
         this.fwdSeekWt = fwdSeekWt;
         this.viewWt = viewWt;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getMovieId() {
+        return movieId;
     }
 
     public double getExplicitRating() {

@@ -100,8 +100,9 @@ public class MathUtils {
                     ;
                     double viewWt = 1.0;
 
-                    wts.add(new WeightActions((double) explicitRating, 0, 0.5, 0, 0.5, timeSpendWt, bckCntrlWt,
-                            fwdCntrlWt, bckSeekWt, fwdSeekWt, viewWt));
+                    wts.add(new WeightActions(user.get("_id").toString(), movie.get("_id").toString(),
+                            (double) explicitRating, 0, 0.5, 0, 0.5, timeSpendWt, bckCntrlWt, fwdCntrlWt, bckSeekWt,
+                            fwdSeekWt, viewWt));
                 }
             }
         }
