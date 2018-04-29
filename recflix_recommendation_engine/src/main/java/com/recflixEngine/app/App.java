@@ -16,8 +16,8 @@ public class App {
         List<WeightActions> wts = DBUtils.getWeightedActions();
         for (WeightActions wt : wts) {
             Uarca uarca = new Uarca(wt);
-            System.out.println(wt.getUserId() + " " + wt.getMovieId() + " " + +uarca.getFinalRating());
-            System.out.println("\n");
+            double finalRating = uarca.getFinalRating();
+            DBUtils.saveFinalRatingsToDb(wt.getUserId(), wt.getMovieId(), finalRating);
             /* System.out.println(wt.getExplicitRating() + " " + wt.getRecomdToUserWt() + " " + wt.getAddFavWt() + " "
                     + wt.getWatchLstWt() + " " + wt.getRemFavWt() + " " + wt.getTimeSpendWt() + " " + wt.getBckCntrlWt()
                     + " " + wt.getFwdCntrlWt() + " " + wt.getBckSeekWt() + " " + wt.getFwdSeekWt() + " "

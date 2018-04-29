@@ -3,9 +3,13 @@ package com.recflixEngine.app;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+
 import org.bson.Document;
 import static com.mongodb.client.model.Projections.*;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,5 +111,20 @@ public class DBUtils {
             }
         }
         return wts;
+    }
+
+    public static void saveFinalRatingsToDb(String userId, String movieId, double finalRating) {
+        Document doc = new Document();
+        doc = feedbacks.findOneAndUpdate(Filters.and(Filters.eq("userId", userId), Filters.eq("movieId", movieId)),
+                Updates.set("finalRating", finalRating));
+        if (doc == null) {
+            doc = new Document();
+            doc.append("rating", 0);
+            doc.append("finalRating", finalRating);
+            doc.append("userId", userId);
+            doc.append("movieId", movieId);
+            doc.append("createdAt", ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+            feedbacks.insertOne(doc);
+        }
     }
 }
