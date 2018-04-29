@@ -18,6 +18,16 @@ class Landing extends Component {
     }).isRequired
   };
 
+  handleOnClick = async movie => {
+    await this.props.addWatchedMovie({
+      variables: {
+        movieId: movie.id,
+        userId: getUserId()
+      }
+    });
+    this.props.history.push(`/movie/${movie.id}`);
+  };
+
   render() {
     const {
       getAllMovies: { allMovies }
@@ -31,15 +41,7 @@ class Landing extends Component {
               <div className="card-body">
                 <h5
                   className="card-title"
-                  onClick={() => {
-                    this.props.addWatchedMovie({
-                      variables: {
-                        movieId: movie.id,
-                        userId: getUserId()
-                      }
-                    });
-                    this.props.history.push(`/movie/${movie.id}`);
-                  }}
+                  onClick={() => this.handleOnClick(movie)}
                 >
                   Card title
                 </h5>

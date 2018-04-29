@@ -58,9 +58,9 @@ class Display extends Component {
     };
   }
 
-  onRatingChange = event => {
+  onRatingChange = async event => {
     this.setState({ selectedRating: event.target.value });
-    this.props.recordFeedback({
+    await this.props.recordFeedback({
       variables: {
         rating: event.target.value,
         movieId: this.props.match.params.movieId
@@ -72,6 +72,9 @@ class Display extends Component {
     const {
       getMovie: { allMovies }
     } = this.props;
+    if (this.props.getFeedback && this.props.getFeedback.loading) {
+      return <div>s</div>;
+    }
     return (
       <div className="container">
         <h1 className="text-center">
@@ -179,7 +182,8 @@ export default compose(
           movieId: props.match.params.movieId,
           userId: getUserId()
         }
-      }
+      },
+      fetchPolicy: 'cache-and-network'
     })
   }),
   graphql(RECORD_FEEDBACK_MUTATION, {
