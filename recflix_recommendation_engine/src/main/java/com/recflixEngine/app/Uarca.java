@@ -19,9 +19,6 @@ public class Uarca {
     // j        = User ID
     // k        = Temporary Variable
 
-    Uarca() {
-    }
-
     public Uarca(WeightActions wts) {
         this.WA = wts;
         Er = wts.getExplicitRating();
