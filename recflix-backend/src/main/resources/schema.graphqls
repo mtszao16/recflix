@@ -19,7 +19,7 @@ type Mutation {
     amount: Int
   ): UserInteraction
   addMovie(name: String!, url: String, totalDuration: Int): Movie
-  recordFeedback(rating: Int!, type: String, movieId: String): Feedback
+  recordFeedback(rating: Int!, movieId: String): Feedback
   addWatchedMovie(movieId: String!, userId: String!): Boolean
 }
 
@@ -60,7 +60,7 @@ type WatchedMovie {
 type Feedback {
   id: ID!
   rating: Int!
-  type: String
+  finalRating: Float
   userId: String
   movieId: String
   createdAt: DateTime!

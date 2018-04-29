@@ -55,12 +55,8 @@ export const ADD_WATCHED_MOVIE_MUTATION = gql`
 `;
 
 export const RECORD_FEEDBACK_MUTATION = gql`
-  mutation RecordFeedbackMutation(
-    $rating: Int!
-    $type: String
-    $movieId: String
-  ) {
-    recordFeedback(rating: $rating, type: $type, movieId: $movieId) {
+  mutation RecordFeedbackMutation($rating: Int!, $movieId: String) {
+    recordFeedback(rating: $rating, movieId: $movieId) {
       createdAt
       id
       rating

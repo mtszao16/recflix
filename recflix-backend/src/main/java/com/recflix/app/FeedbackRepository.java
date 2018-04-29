@@ -56,7 +56,7 @@ public class FeedbackRepository {
 
         if (docsCount < 1) {
             doc.append("rating", feedback.getRating());
-            doc.append("type", feedback.getType());
+            doc.append("finalRating", feedback.getFinalRating());
             doc.append("userId", feedback.getUserId());
             doc.append("movieId", feedback.getMovieId());
             doc.append("createdAt", Scalars.dateTime.getCoercing().serialize(feedback.getCreatedAt()));
@@ -65,16 +65,16 @@ public class FeedbackRepository {
             doc = feedbacks.findOneAndUpdate(
                     and(eq("userId", feedback.getUserId()), eq("movieId", feedback.getMovieId())),
                     Updates.set("rating", feedback.getRating()));
-            return new Feedback(doc.get("_id").toString(), doc.getInteger("rating"), doc.getString("type"),
+            return new Feedback(doc.get("_id").toString(), doc.getInteger("rating"), doc.getDouble("finalRating"),
                     ZonedDateTime.parse(doc.getString("createdAt")), doc.getString("userId"), doc.getString("movieId"));
         }
 
-        return new Feedback(doc.get("_id").toString(), doc.getInteger("rating"), doc.getString("type"),
+        return new Feedback(doc.get("_id").toString(), doc.getInteger("rating"), doc.getDouble("finalRating"),
                 ZonedDateTime.parse(doc.getString("createdAt")), doc.getString("userId"), doc.getString("movieId"));
     }
 
     private Feedback feedback(Document doc) {
-        return new Feedback(doc.get("_id").toString(), doc.getInteger("rating"), doc.getString("type"),
+        return new Feedback(doc.get("_id").toString(), doc.getInteger("rating"), doc.getDouble("finalRating"),
                 ZonedDateTime.parse(doc.getString("createdAt")), doc.getString("userId"), doc.getString("movieId"));
     }
 

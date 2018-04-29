@@ -63,7 +63,6 @@ class Display extends Component {
     this.props.recordFeedback({
       variables: {
         rating: event.target.value,
-        type: 'explicit',
         movieId: this.props.match.params.movieId
       }
     });
