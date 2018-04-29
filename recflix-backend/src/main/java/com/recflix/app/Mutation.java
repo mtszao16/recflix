@@ -6,7 +6,6 @@ import com.recflix.utils.HashString;
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
