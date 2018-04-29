@@ -96,6 +96,6 @@ public class Uarca {
             // System.out.println("FR[" + i + "][" + j + "] = " + FR[i][j]);
         }
 
-        return FR[i][j];
+        return Math.round(FR[i][j] * 100.0) / 100.0;
     }
 }
