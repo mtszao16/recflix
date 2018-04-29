@@ -10,21 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * MathUtils
+ * DBUtils
  */
-public class MathUtils {
+public class DBUtils {
 
     private static MongoCollection<Document> userInteractions;
     private static MongoCollection<Document> users;
     private static MongoCollection<Document> movies;
     private static MongoCollection<Document> feedbacks;
 
-    public MathUtils(MongoCollection<Document> userInteractions, MongoCollection<Document> users,
+    public DBUtils(MongoCollection<Document> userInteractions, MongoCollection<Document> users,
             MongoCollection<Document> movies, MongoCollection<Document> feedbacks) {
-        MathUtils.userInteractions = userInteractions;
-        MathUtils.users = users;
-        MathUtils.movies = movies;
-        MathUtils.feedbacks = feedbacks;
+        DBUtils.userInteractions = userInteractions;
+        DBUtils.users = users;
+        DBUtils.movies = movies;
+        DBUtils.feedbacks = feedbacks;
     }
 
     /**

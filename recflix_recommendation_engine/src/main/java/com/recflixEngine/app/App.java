@@ -8,12 +8,12 @@ import java.util.List;
 public class App {
     static {
         MongoDatabase mongo = new MongoClient().getDatabase("recflix");
-        new MathUtils(mongo.getCollection("userInteractions"), mongo.getCollection("users"),
+        new DBUtils(mongo.getCollection("userInteractions"), mongo.getCollection("users"),
                 mongo.getCollection("movies"), mongo.getCollection("feedbacks"));
     }
 
     public static void main(String[] args) {
-        List<WeightActions> wts = MathUtils.getWeightedActions();
+        List<WeightActions> wts = DBUtils.getWeightedActions();
         for (WeightActions wt : wts) {
             Uarca uarca = new Uarca(wt);
             System.out.println(wt.getUserId() + " " + wt.getMovieId() + " " + +uarca.getFinalRating());
