@@ -7,9 +7,23 @@
 
 **A movie streaming system that uses an integrated architecture of movie recommender system which considers user behaviour, interactions, and understanding patterns developed to recommend movies to the user. This architecture analyses and transforms user behaviour into implicit ratings.**
 
-### Usage
+### Usage 
 
-    mvn jetty:run
+* recflix-backend
+
+    	mvn jetty:run
+
+* recflix-frontend
+
+		npm install
+
+		npm start
+
+* recflix-recommendation-engine
+
+		mvn package
+
+		java -jar target/recflix_recommendation_engine-jar-with-dependencies.jar		
 
 ### TODO
 
