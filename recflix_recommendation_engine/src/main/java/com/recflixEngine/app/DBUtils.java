@@ -22,13 +22,16 @@ public class DBUtils {
     private static MongoCollection<Document> users;
     private static MongoCollection<Document> movies;
     private static MongoCollection<Document> feedbacks;
+    private static MongoCollection<Document> recommendations;
 
     public DBUtils(MongoCollection<Document> userInteractions, MongoCollection<Document> users,
-            MongoCollection<Document> movies, MongoCollection<Document> feedbacks) {
+            MongoCollection<Document> movies, MongoCollection<Document> feedbacks,
+            MongoCollection<Document> recommendations) {
         DBUtils.userInteractions = userInteractions;
         DBUtils.users = users;
         DBUtils.movies = movies;
         DBUtils.feedbacks = feedbacks;
+        DBUtils.recommendations = recommendations;
     }
 
     /**
@@ -125,6 +128,22 @@ public class DBUtils {
             doc.append("movieId", movieId);
             doc.append("createdAt", ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
             feedbacks.insertOne(doc);
+        }
+    }
+
+    public static void storeRecommendationsToDb(String userId, String movieId, double finalRating) {
+        Document doc = new Document();
+        doc = recommendations.findOneAndUpdate(
+                Filters.and(Filters.eq("userId", userId), Filters.eq("movieId", movieId)),
+                Updates.set("rating", finalRating));
+
+        if (doc == null) {
+            doc = new Document();
+            doc.append("rating", finalRating);
+            doc.append("userId", userId);
+            doc.append("movieId", movieId);
+            doc.append("createdAt", ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+            recommendations.insertOne(doc);
         }
     }
 }

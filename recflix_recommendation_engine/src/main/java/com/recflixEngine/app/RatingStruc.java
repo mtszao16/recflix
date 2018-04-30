@@ -13,7 +13,6 @@ public class RatingStruc {
         this.userId = userId;
         this.movieId = movieId;
         this.finalRating = finalRating;
-
     }
 
     public String getUserId() {

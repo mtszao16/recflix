@@ -1,16 +1,26 @@
 package com.recflixEngine.app;
 
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+
+import org.bson.Document;
+
 import com.mongodb.MongoClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class App {
+    static MongoCollection<Document> movies;
+    static MongoCollection<Document> users;
+
     static {
         MongoDatabase mongo = new MongoClient().getDatabase("recflix");
+        movies = mongo.getCollection("movies");
+        users = mongo.getCollection("users");
         new DBUtils(mongo.getCollection("userInteractions"), mongo.getCollection("users"),
-                mongo.getCollection("movies"), mongo.getCollection("feedbacks"));
+                mongo.getCollection("movies"), mongo.getCollection("feedbacks"),
+                mongo.getCollection("recommendations"));
     }
 
     public static void main(String[] args) {
@@ -27,9 +37,10 @@ public class App {
                     + wt.getViewWt()); */
         }
 
-        rats = CollaborativeFiltering.CosineSimilarityUser(rats);
+        rats = CollaborativeFiltering.CosineSimilarityUser(rats, movies.find(), users.find());
         for (RatingStruc e : rats) {
-            DBUtils.saveFinalRatingsToDb(e.getUserId(), e.getMovieId(), e.getFinalRating());
+            DBUtils.storeRecommendationsToDb(e.getUserId(), e.getMovieId(), e.getFinalRating());
+
             // System.out.println(e.getUserId() + " " + e.getMovieId() + " " + e.getFinalRating());
         }
     }
