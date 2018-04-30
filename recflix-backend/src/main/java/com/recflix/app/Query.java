@@ -2,6 +2,8 @@ package com.recflix.app;
 
 import com.coxautodev.graphql.tools.GraphQLRootResolver;
 
+import graphql.schema.DataFetchingEnvironment;
+
 import java.util.List;
 
 public class Query implements GraphQLRootResolver {
@@ -10,13 +12,16 @@ public class Query implements GraphQLRootResolver {
     private final UserInteractionRepository userInteractionRepository;
     private final MovieRepository movieRepository;
     private final FeedbackRepository feedbackRepository;
+    private final MovieRecommendationRepository movieRecommendationRepository;
 
     public Query(UserRepository userRepository, UserInteractionRepository userInteractionRepository,
-            MovieRepository movieRepository, FeedbackRepository feedbackRepository) {
+            MovieRepository movieRepository, FeedbackRepository feedbackRepository,
+            MovieRecommendationRepository movieRecommendationRepository) {
         this.userRepository = userRepository;
         this.userInteractionRepository = userInteractionRepository;
         this.movieRepository = movieRepository;
         this.feedbackRepository = feedbackRepository;
+        this.movieRecommendationRepository = movieRecommendationRepository;
     }
 
     public List<User> allUsers() {
@@ -29,6 +34,11 @@ public class Query implements GraphQLRootResolver {
 
     public List<Movie> allMovies(MovieFilter filter) {
         return movieRepository.getAllMovies(filter);
+    }
+
+    public List<MovieRecommendation> getAllMoviesRecommendation(DataFetchingEnvironment env) {
+        AuthContext context = env.getContext();
+        return movieRecommendationRepository.getAllMoviesRecommendation(context.getUser().getId());
     }
 
     public List<Feedback> allFeedbacks(FeedbackFilter filter) {

@@ -7,6 +7,7 @@ type Query {
   allUsers: [User]
   allUserInteractions: [UserInteraction]
   allMovies(filter: MovieFilter): [Movie]
+  allMoviesRecommendation: [MovieRecommendation]
   allFeedbacks(filter: FeedbackFilter): [Feedback]
 }
 
@@ -55,6 +56,15 @@ type WatchedMovie {
   totalDuration: Int
   watchedCount: Int
   watchedDuration: Int
+}
+
+type MovieRecommendation {
+  id: ID!
+  name: String!
+  url: String
+  totalDuration: Int
+  userId: String
+  rating: Float
 }
 
 type Feedback {
