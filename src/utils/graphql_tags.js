@@ -77,3 +77,13 @@ export const GET_FILTERED_FEEDBACKS = gql`
     }
   }
 `;
+
+export const GET_ALL_RECOMMENDED_MOVIES = gql`
+  query GetAllMoviesRecommendation {
+    allMoviesRecommendation {
+      id
+      name
+      url
+    }
+  }
+`;
