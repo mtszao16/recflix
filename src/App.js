@@ -18,7 +18,7 @@ const App = props => {
   return (
     <React.Fragment>
       <div className="main-bg">
-        <img alt="Landing Page" src="./assets/images/movie-audience-alt2.jpg" />
+        <img src="https://raw.githubusercontent.com/UtkarshGupta-CS/recflix/master/public/assets/images/movie-audience-alt2.jpg" />
       </div>
       <Header />
       {authToken ? (

@@ -40,14 +40,32 @@ class Landing extends Component {
       getAllMoviesRecommendation: { allMoviesRecommendation }
     } = this.props;
     return (
-      <div>
+      <div
+        className="container container-fluid"
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          margin: '0 auto',
+          justifyContent: 'space-between'
+        }}
+      >
         {allMovies &&
           allMovies.map(movie => (
-            <div key={movie.id} className="card" style={{ width: '18rem' }}>
-              <img className="card-img-top" src="." alt="Card image cap" />
+            <div
+              key={movie.id}
+              className="card"
+              style={{ width: '15rem', height: '20rem', margin: '10px' }}
+            >
+              <img
+                className="card-img-top"
+                src={movie.imageUrl}
+                alt="Card image cap"
+                height="250"
+              />
               <div className="card-body">
                 <h5
                   className="card-title"
+                  style={{ color: 'black' }}
                   onClick={() => this.handleOnClick(movie)}
                 >
                   {movie.name}
@@ -63,10 +81,16 @@ class Landing extends Component {
         {allMoviesRecommendation &&
           allMoviesRecommendation.map(movie => (
             <div key={movie.id} className="card" style={{ width: '18rem' }}>
-              <img className="card-img-top" src="." alt="Card image cap" />
+              <img
+                className="card-img-top"
+                src={movie.imageUrl}
+                alt="Card image cap"
+                height="250"
+              />
               <div className="card-body">
                 <h5
                   className="card-title"
+                  style={{ color: 'black' }}
                   onClick={() => this.handleOnClick(movie)}
                 >
                   {movie.name}

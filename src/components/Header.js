@@ -10,7 +10,11 @@ class Header extends Component {
       <nav className="navbar transparent-header">
         <div className="navbar-header">
           <Link className="navbar-brand" to="/">
-            <img alt="Logo" src="./assets/images/recflixlogo.png" id="logo" />
+            <img
+              alt="Logo"
+              src="https://raw.githubusercontent.com/UtkarshGupta-CS/recflix/master/public/assets/images/recflixlogo.png"
+              id="logo"
+            />
           </Link>
         </div>
         <div className="flex flex-fixed">

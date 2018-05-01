@@ -33,7 +33,8 @@ export const GET_ALL_MOVIES = gql`
     allMovies {
       id
       name
-      url
+      movieUrl
+      imageUrl
     }
   }
 `;
@@ -43,7 +44,8 @@ export const GET_FILTERED_MOVIES = gql`
     allMovies(filter: $filter) {
       id
       name
-      url
+      movieUrl
+      imageUrl
     }
   }
 `;
@@ -83,7 +85,8 @@ export const GET_ALL_RECOMMENDED_MOVIES = gql`
     allMoviesRecommendation {
       id
       name
-      url
+      movieUrl
+      imageUrl
     }
   }
 `;

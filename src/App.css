@@ -290,10 +290,10 @@ body {
   -o-background-size: cover;
   background-size: cover; */
 
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-	
+  position: fixed;
+  top: 0;
+  left: 0;
+
   /* Preserve aspet ratio */
   min-width: 100%;
   min-height: 100%;
@@ -357,4 +357,12 @@ body {
 .star-rating label:hover,
 .star-rating label:hover ~ label {
   color: #fc0;
+}
+
+.fdStar {
+  color: #fc0;
+}
+
+.floatClearFix {
+  clear: both;
 }
