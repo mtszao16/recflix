@@ -9,20 +9,21 @@
 
 ### Usage 
 
-* recflix-backend
-
-    	mvn jetty:run
-
 * recflix-frontend
 
 		npm install
-
 		npm start
+
+* recflix-backend
+
+    	cd recflix-backend
+		mvn jetty:run
+
 
 * recflix-recommendation-engine
 
+		cd recflix-recommendation-engine
 		mvn package
-
 		java -jar target/recflix_recommendation_engine-jar-with-dependencies.jar		
 
 ### TODO
