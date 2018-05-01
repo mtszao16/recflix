@@ -45,8 +45,8 @@ public class Mutation implements GraphQLRootResolver {
         return true;
     }
 
-    public Movie addMovie(String name, String url, Integer totalDuration) {
-        Movie newMovie = new Movie(name, url, totalDuration);
+    public Movie addMovie(String name, String movieUrl, String imageUrl, Integer totalDuration) {
+        Movie newMovie = new Movie(name, movieUrl, imageUrl, totalDuration);
         return movieRepository.saveMovie(newMovie);
     }
 
@@ -73,9 +73,9 @@ public class Mutation implements GraphQLRootResolver {
             Algorithm algorithm = Algorithm.HMAC256(AuthUtils.getAppSecret());
             token = JWT.create().withIssuer("auth0").withClaim("userId", user.getId()).sign(algorithm);
         } catch (UnsupportedEncodingException exception) {
-            //UTF-8 encoding not supported
+            // UTF-8 encoding not supported
         } catch (JWTCreationException exception) {
-            //Invalid Signing configuration / Couldn't convert Claims.
+            // Invalid Signing configuration / Couldn't convert Claims.
         }
 
         if (user.getPassword().equals(hashedPassword)) {

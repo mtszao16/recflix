@@ -31,9 +31,9 @@ public class MovieRecommendationRepository {
         for (Document el : recommendedMoviesDocs) {
             Document movie = movies.find(Filters.eq("_id", new ObjectId(el.getString("movieId")))).first();
 
-            allRecommendedMovies.add(
-                    new MovieRecommendation(el.getString("userId"), el.getDouble("rating"), el.getString("movieId"),
-                            movie.getString("name"), movie.getString("url"), movie.getInteger("totalDuration")));
+            allRecommendedMovies.add(new MovieRecommendation(el.getString("userId"), el.getDouble("rating"),
+                    el.getString("movieId"), movie.getString("name"), movie.getString("movieUrl"),
+                    movie.getString("imageUrl"), movie.getInteger("totalDuration")));
         }
 
         allRecommendedMovies.sort(Comparator.comparingDouble(MovieRecommendation::getRating).reversed());

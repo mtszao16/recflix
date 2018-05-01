@@ -19,7 +19,12 @@ type Mutation {
     movieId: String
     amount: Int
   ): UserInteraction
-  addMovie(name: String!, url: String, totalDuration: Int): Movie
+  addMovie(
+    name: String!
+    movieUrl: String
+    imageUrl: String
+    totalDuration: Int
+  ): Movie
   recordFeedback(rating: Int!, movieId: String): Feedback
   addWatchedMovie(movieId: String!, userId: String!): Boolean
 }
@@ -45,14 +50,16 @@ type UserInteraction {
 type Movie {
   id: ID!
   name: String!
-  url: String
+  movieUrl: String
+  imageUrl: String
   totalDuration: Int
 }
 
 type WatchedMovie {
   id: ID!
   name: String!
-  url: String
+  movieUrl: String
+  imageUrl: String
   totalDuration: Int
   watchedCount: Int
   watchedDuration: Int
@@ -61,7 +68,8 @@ type WatchedMovie {
 type MovieRecommendation {
   id: ID!
   name: String!
-  url: String
+  movieUrl: String
+  imageUrl: String
   totalDuration: Int
   userId: String
   rating: Float

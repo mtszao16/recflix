@@ -8,13 +8,14 @@ public class WatchedMovie extends Movie {
     private final Integer watchedCount;
     private final Integer watchedDuration;
 
-    public WatchedMovie(String name, String url, Integer totalDuration, Integer watchedCount, Integer watchedDuration) {
-        this(null, name, url, totalDuration, watchedCount, watchedDuration);
+    public WatchedMovie(String name, String movieUrl, String imageUrl, Integer totalDuration, Integer watchedCount,
+            Integer watchedDuration) {
+        this(null, name, movieUrl, imageUrl, totalDuration, watchedCount, watchedDuration);
     }
 
-    public WatchedMovie(String id, String name, String url, Integer totalDuration, Integer watchedCount,
-            Integer watchedDuration) {
-        super(id, name, url, totalDuration);
+    public WatchedMovie(String id, String name, String movieUrl, String imageUrl, Integer totalDuration,
+            Integer watchedCount, Integer watchedDuration) {
+        super(id, name, movieUrl, imageUrl, totalDuration);
         this.watchedCount = watchedCount;
         this.watchedDuration = watchedDuration;
     }

@@ -7,17 +7,19 @@ public class Movie {
 
     private final String id;
     private final String name;
-    private final String url;
+    private final String movieUrl;
+    private final String imageUrl;
     private final Integer totalDuration;
 
-    public Movie(String name, String url, Integer totalDuration) {
-        this(null, name, url, totalDuration);
+    public Movie(String name, String movieUrl, String imageUrl, Integer totalDuration) {
+        this(null, name, movieUrl, imageUrl, totalDuration);
     }
 
-    public Movie(String id, String name, String url, Integer totalDuration) {
+    public Movie(String id, String name, String movieUrl, String imageUrl, Integer totalDuration) {
         this.id = id;
         this.name = name;
-        this.url = url;
+        this.movieUrl = movieUrl;
+        this.imageUrl = imageUrl;
         this.totalDuration = totalDuration;
     }
 
@@ -29,8 +31,12 @@ public class Movie {
         return name;
     }
 
-    public String getUrl() {
-        return url;
+    public String getMovieUrl() {
+        return movieUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public Integer getTotalDuration() {

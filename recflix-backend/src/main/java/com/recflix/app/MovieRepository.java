@@ -34,15 +34,17 @@ public class MovieRepository {
     public Movie saveMovie(Movie movie) {
         Document doc = new Document();
         doc.append("name", movie.getName());
-        doc.append("url", movie.getUrl());
+        doc.append("movieUrl", movie.getMovieUrl());
+        doc.append("imageUrl", movie.getImageUrl());
         doc.append("totalDuration", movie.getTotalDuration());
         movies.insertOne(doc);
-        return new Movie(doc.get("_id").toString(), movie.getName(), movie.getUrl(), movie.getTotalDuration());
+        return new Movie(doc.get("_id").toString(), movie.getName(), movie.getMovieUrl(), movie.getImageUrl(),
+                movie.getTotalDuration());
     }
 
     private Movie movie(Document doc) {
-        return new Movie(doc.get("_id").toString(), doc.getString("name"), doc.getString("url"),
-                doc.getInteger("totalDuration"));
+        return new Movie(doc.get("_id").toString(), doc.getString("name"), doc.getString("movieUrl"),
+                doc.getString("imageUrl"), doc.getInteger("totalDuration"));
     }
 
     public List<Movie> getAllMovies(MovieFilter filter) {
