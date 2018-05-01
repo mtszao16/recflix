@@ -31,17 +31,21 @@ public class App {
             double finalRating = uarca.getFinalRating();
             DBUtils.saveFinalRatingsToDb(wt.getUserId(), wt.getMovieId(), finalRating);
             rats.add(new RatingStruc(wt.getUserId(), wt.getMovieId(), finalRating));
-            /* System.out.println(wt.getExplicitRating() + " " + wt.getRecomdToUserWt() + " " + wt.getAddFavWt() + " "
-                    + wt.getWatchLstWt() + " " + wt.getRemFavWt() + " " + wt.getTimeSpendWt() + " " + wt.getBckCntrlWt()
-                    + " " + wt.getFwdCntrlWt() + " " + wt.getBckSeekWt() + " " + wt.getFwdSeekWt() + " "
-                    + wt.getViewWt()); */
+            /*
+             * System.out.println(wt.getExplicitRating() + " " + wt.getRecomdToUserWt() +
+             * " " + wt.getAddFavWt() + " " + wt.getWatchLstWt() + " " + wt.getRemFavWt() +
+             * " " + wt.getTimeSpendWt() + " " + wt.getBckCntrlWt() + " " +
+             * wt.getFwdCntrlWt() + " " + wt.getBckSeekWt() + " " + wt.getFwdSeekWt() + " "
+             * + wt.getViewWt());
+             */
         }
 
-        rats = CollaborativeFiltering.CosineSimilarityUser(rats, movies.find(), users.find());
+        rats = CollaborativeFiltering.getMoviesRecommendations(rats, movies.find(), users.find());
         for (RatingStruc e : rats) {
             DBUtils.storeRecommendationsToDb(e.getUserId(), e.getMovieId(), e.getFinalRating());
 
-            // System.out.println(e.getUserId() + " " + e.getMovieId() + " " + e.getFinalRating());
+            // System.out.println(e.getUserId() + " " + e.getMovieId() + " " +
+            // e.getFinalRating());
         }
     }
 }

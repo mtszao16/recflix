@@ -11,7 +11,7 @@ import java.lang.Math;
 
 class CollaborativeFiltering {
 
-    public static List<RatingStruc> CosineSimilarityUser(List<RatingStruc> ratingStrucsList,
+    public static List<RatingStruc> getMoviesRecommendations(List<RatingStruc> ratingStrucsList,
             FindIterable<Document> movieDocs, FindIterable<Document> userDocs) {
 
         MongoCursor<Document> csr1 = userDocs.iterator();
