@@ -41,48 +41,56 @@ class Landing extends Component {
     } = this.props;
     return (
       <div>
-        <div
-          id="recommendationIndicators"
-          className="carousel slide"
-          data-ride="carousel"
-        >
-          <div className="carousel-inner">
-            {allMoviesRecommendation &&
-              allMoviesRecommendation.map((movie, index) => (
-                <div
-                  key={index}
-                  className={`carousel-item ${index === 0 ? 'active' : ''}`}
-                >
-                  <div className="card-body">
-                    <img
-                      className="d-block w-100"
-                      src={movie.bannerImageUrl || ''}
-                      alt="Slide"
-                      height="400"
-                    />
+        {allMoviesRecommendation &&
+          allMoviesRecommendation.length > 0 && (
+            <div
+              id="recommendationIndicators"
+              className="carousel slide"
+              data-ride="carousel"
+            >
+              <div className="carousel-inner">
+                {allMoviesRecommendation.map((movie, index) => (
+                  <div
+                    key={index}
+                    className={`carousel-item ${index === 0 ? 'active' : ''}`}
+                  >
+                    <div className="card-body">
+                      <img
+                        className="d-block w-100"
+                        src={movie.bannerImageUrl || ''}
+                        alt="Slide"
+                        height="400"
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
-          </div>
-          <a
-            className="carousel-control-prev"
-            href="#recommendationIndicators"
-            role="button"
-            data-slide="prev"
-          >
-            <span className="carousel-control-prev-icon" aria-hidden="true" />
-            <span className="sr-only">Previous</span>
-          </a>
-          <a
-            className="carousel-control-next"
-            href="#recommendationIndicators"
-            role="button"
-            data-slide="next"
-          >
-            <span className="carousel-control-next-icon" aria-hidden="true" />
-            <span className="sr-only">Next</span>
-          </a>
-        </div>
+                ))}
+              </div>
+              <a
+                className="carousel-control-prev"
+                href="#recommendationIndicators"
+                role="button"
+                data-slide="prev"
+              >
+                <span
+                  className="carousel-control-prev-icon"
+                  aria-hidden="true"
+                />
+                <span className="sr-only">Previous</span>
+              </a>
+              <a
+                className="carousel-control-next"
+                href="#recommendationIndicators"
+                role="button"
+                data-slide="next"
+              >
+                <span
+                  className="carousel-control-next-icon"
+                  aria-hidden="true"
+                />
+                <span className="sr-only">Next</span>
+              </a>
+            </div>
+          )}
         <div
           className="container container-fluid"
           style={{
