@@ -35,6 +35,7 @@ export const GET_ALL_MOVIES = gql`
       name
       movieUrl
       imageUrl
+      bannerImageUrl
     }
   }
 `;
@@ -46,6 +47,7 @@ export const GET_FILTERED_MOVIES = gql`
       name
       movieUrl
       imageUrl
+      bannerImageUrl
     }
   }
 `;
@@ -87,6 +89,7 @@ export const GET_ALL_RECOMMENDED_MOVIES = gql`
       name
       movieUrl
       imageUrl
+      bannerImageUrl
     }
   }
 `;

@@ -188,7 +188,7 @@ class Display extends Component {
               >
                 <img
                   className="card-img-top"
-                  src={movie.imageUrl}
+                  src={movie.bannerImageUrl || ''}
                   alt="Card image cap"
                   height="180"
                 />
