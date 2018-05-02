@@ -67,6 +67,7 @@ public class UserRepository {
             movieSpec.append("totalDuration", movie.getTotalDuration());
             movieSpec.append("movieUrl", movie.getMovieUrl());
             movieSpec.append("imageUrl", movie.getImageUrl());
+            movieSpec.append("bannerImageUrl", movie.getBannerImageUrl());
             movieSpec.append("watchedCount", 1);
             movieSpec.append("watchedDuration", 1);
             users.updateOne(eq("_id", new ObjectId(userId)), Updates.push("watchedMovies", movieSpec));

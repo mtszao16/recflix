@@ -34,8 +34,8 @@ public class WatchedMovieRepository {
 
         for (Document el : watchedMoviesDocs) {
             watchedMovies.add(new WatchedMovie(el.get("_id").toString(), el.getString("name"), el.getString("movieUrl"),
-                    el.getString("imageUrl"), el.getInteger("totalDuration"), el.getInteger("watchedCount"),
-                    el.getInteger("watchedDuration")));
+                    el.getString("imageUrl"), el.getString("bannerImageUrl"), el.getInteger("totalDuration"),
+                    el.getInteger("watchedCount"), el.getInteger("watchedDuration")));
         }
 
         return watchedMovies;

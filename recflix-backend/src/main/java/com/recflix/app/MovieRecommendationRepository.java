@@ -33,7 +33,7 @@ public class MovieRecommendationRepository {
 
             allRecommendedMovies.add(new MovieRecommendation(el.getString("userId"), el.getDouble("rating"),
                     el.getString("movieId"), movie.getString("name"), movie.getString("movieUrl"),
-                    movie.getString("imageUrl"), movie.getInteger("totalDuration")));
+                    movie.getString("imageUrl"), movie.getString("bannerImageUrl"), movie.getInteger("totalDuration")));
         }
 
         allRecommendedMovies.sort(Comparator.comparingDouble(MovieRecommendation::getRating).reversed());

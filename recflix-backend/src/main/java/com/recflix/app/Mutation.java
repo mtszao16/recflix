@@ -45,8 +45,8 @@ public class Mutation implements GraphQLRootResolver {
         return true;
     }
 
-    public Movie addMovie(String name, String movieUrl, String imageUrl, Integer totalDuration) {
-        Movie newMovie = new Movie(name, movieUrl, imageUrl, totalDuration);
+    public Movie addMovie(String name, String movieUrl, String imageUrl, String bannerImageUrl, Integer totalDuration) {
+        Movie newMovie = new Movie(name, movieUrl, imageUrl, bannerImageUrl, totalDuration);
         return movieRepository.saveMovie(newMovie);
     }
 

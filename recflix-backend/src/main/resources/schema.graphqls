@@ -23,6 +23,7 @@ type Mutation {
     name: String!
     movieUrl: String
     imageUrl: String
+    bannerImageUrl: String
     totalDuration: Int
   ): Movie
   recordFeedback(rating: Int!, movieId: String): Feedback
@@ -52,6 +53,7 @@ type Movie {
   name: String!
   movieUrl: String
   imageUrl: String
+  bannerImageUrl: String
   totalDuration: Int
 }
 
@@ -60,6 +62,7 @@ type WatchedMovie {
   name: String!
   movieUrl: String
   imageUrl: String
+  bannerImageUrl: String
   totalDuration: Int
   watchedCount: Int
   watchedDuration: Int
@@ -70,6 +73,7 @@ type MovieRecommendation {
   name: String!
   movieUrl: String
   imageUrl: String
+  bannerImageUrl: String
   totalDuration: Int
   userId: String
   rating: Float

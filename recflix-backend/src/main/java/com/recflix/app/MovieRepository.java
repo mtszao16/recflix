@@ -36,15 +36,16 @@ public class MovieRepository {
         doc.append("name", movie.getName());
         doc.append("movieUrl", movie.getMovieUrl());
         doc.append("imageUrl", movie.getImageUrl());
+        doc.append("bannerImageUrl", movie.getBannerImageUrl());
         doc.append("totalDuration", movie.getTotalDuration());
         movies.insertOne(doc);
         return new Movie(doc.get("_id").toString(), movie.getName(), movie.getMovieUrl(), movie.getImageUrl(),
-                movie.getTotalDuration());
+                movie.getBannerImageUrl(), movie.getTotalDuration());
     }
 
     private Movie movie(Document doc) {
         return new Movie(doc.get("_id").toString(), doc.getString("name"), doc.getString("movieUrl"),
-                doc.getString("imageUrl"), doc.getInteger("totalDuration"));
+                doc.getString("imageUrl"), doc.getString("bannerImageUrl"), doc.getInteger("totalDuration"));
     }
 
     public List<Movie> getAllMovies(MovieFilter filter) {
