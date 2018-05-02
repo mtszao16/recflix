@@ -49,21 +49,26 @@ class Landing extends Component {
               data-ride="carousel"
             >
               <div className="carousel-inner">
-                {allMoviesRecommendation.map((movie, index) => (
-                  <div
-                    key={index}
-                    className={`carousel-item ${index === 0 ? 'active' : ''}`}
-                  >
-                    <div className="card-body">
-                      <img
-                        className="d-block w-100"
-                        src={movie.bannerImageUrl || ''}
-                        alt="Slide"
-                        height="400"
-                      />
-                    </div>
-                  </div>
-                ))}
+                {allMoviesRecommendation.map((movie, index) => {
+                  if (index < 5)
+                    return (
+                      <div
+                        key={index}
+                        className={`carousel-item ${
+                          index === 0 ? 'active' : ''
+                        }`}
+                      >
+                        <div className="card-body">
+                          <img
+                            className="d-block w-100"
+                            src={movie.bannerImageUrl || ''}
+                            alt="Slide"
+                            height="400"
+                          />
+                        </div>
+                      </div>
+                    );
+                })}
               </div>
               <a
                 className="carousel-control-prev"

@@ -180,29 +180,32 @@ class Display extends Component {
         </div>
         <div className="col-md-3">
           {allMoviesRecommendation &&
-            allMoviesRecommendation.map(movie => (
-              <div
-                key={movie.id}
-                className="card"
-                style={{ width: '25rem', height: '15rem', margin: '10px' }}
-              >
-                <img
-                  className="card-img-top"
-                  src={movie.bannerImageUrl || ''}
-                  alt="Card image cap"
-                  height="180"
-                />
-                <div className="card-body">
-                  <h5
-                    className="card-title"
-                    style={{ color: 'black' }}
-                    onClick={() => this.handleOnClick(movie)}
+            allMoviesRecommendation.map((movie, index) => {
+              if (index < 5)
+                return (
+                  <div
+                    key={movie.id}
+                    className="card"
+                    style={{ width: '25rem', height: '15rem', margin: '10px' }}
                   >
-                    {movie.name}
-                  </h5>
-                </div>
-              </div>
-            ))}
+                    <img
+                      className="card-img-top"
+                      src={movie.bannerImageUrl || ''}
+                      alt="Card image cap"
+                      height="180"
+                    />
+                    <div className="card-body">
+                      <h5
+                        className="card-title"
+                        style={{ color: 'black' }}
+                        onClick={() => this.handleOnClick(movie)}
+                      >
+                        {movie.name}
+                      </h5>
+                    </div>
+                  </div>
+                );
+            })}
         </div>
       </div>
     );
