@@ -2,18 +2,83 @@ import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { AUTH_TOKEN } from '../utils/constants';
 import { SIGNIN_MUTATION, SIGNUP_MUTATION } from '../utils/graphql_tags';
+import { validateNonEmpty } from '../utils/validationUtils';
 
+import { FormErrors } from './FormError';
 class Auth extends Component {
   state = {
     login: true, // switch between Login and SignUp
     email: '',
     password: '',
-    name: ''
+    name: '',
+    formErrors: { email: '', password: '', name: '' },
+    emailValid: false,
+    passwordValid: false,
+    nameValid: false,
+    formValid: false
   };
+
+  handleUserInput = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({ [name]: value }, () => {
+      this.validateField(name, value);
+    });
+  };
+
+  validateField(fieldName, value) {
+    let { emailValid, nameValid, passwordValid, formErrors } = this.state;
+
+    switch (fieldName) {
+      case 'name':
+        nameValid = validateNonEmpty(value);
+        formErrors.name = nameValid ? '' : ' is invalid';
+        break;
+
+      case 'email':
+        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        formErrors.email = emailValid ? '' : ' is invalid';
+        break;
+      case 'password':
+        passwordValid = value.length >= 6;
+        formErrors.password = passwordValid ? '' : ' is too short';
+        break;
+      default:
+        break;
+    }
+    this.setState(
+      {
+        formErrors: formErrors,
+        nameValid: nameValid,
+        emailValid: emailValid,
+        passwordValid: passwordValid
+      },
+      this.validateForm
+    );
+  }
+
+  validateForm() {
+    if (this.state.login) {
+      this.setState({
+        formValid: this.state.emailValid && this.state.passwordValid
+      });
+    } else {
+      this.setState({
+        formValid:
+          this.state.emailValid &&
+          this.state.passwordValid &&
+          this.state.nameValid
+      });
+    }
+  }
+
+  errorClass(error) {
+    return error.length === 0 ? '' : 'has-error';
+  }
 
   handleOnClick = event => {
     event.preventDefault();
-    this._confirm();
+    if (this.state.formValid) this._confirm();
   };
 
   render() {
@@ -31,7 +96,17 @@ class Auth extends Component {
                   onClick={() => {
                     this.setState(prevState => {
                       if (!prevState.login) {
-                        return { login: true };
+                        return {
+                          login: true,
+                          email: '',
+                          password: '',
+                          name: '',
+                          formErrors: { email: '', password: '', name: '' },
+                          emailValid: false,
+                          passwordValid: false,
+                          nameValid: false,
+                          formValid: false
+                        };
                       }
                     });
                   }}
@@ -48,7 +123,17 @@ class Auth extends Component {
                   onClick={() => {
                     this.setState(prevState => {
                       if (prevState.login) {
-                        return { login: false };
+                        return {
+                          login: false,
+                          email: '',
+                          password: '',
+                          name: '',
+                          formErrors: { email: '', password: '', name: '' },
+                          emailValid: false,
+                          passwordValid: false,
+                          nameValid: false,
+                          formValid: false
+                        };
                       }
                     });
                   }}
@@ -57,54 +142,53 @@ class Auth extends Component {
                 </a>
               </li>
             </ul>
-
+            <div className="panel panel-default">
+              <FormErrors formErrors={this.state.formErrors} />
+            </div>
             <div className="tab-content">
               <div role="tabpanel" className="tab-pane active" id="login">
-                <form className="needs-validation" noValidate>
+                <form className="needs-validation">
                   <div className="form-row">
-                    <div className="col">
-                      <label htmlFor="validationCustomEmail">
-                        Email Address
-                      </label>
+                    <div
+                      className={`col ${this.errorClass(
+                        this.state.formErrors.email
+                      )}`}
+                    >
+                      <label htmlFor="email">Email Address</label>
                       <input
+                        name="email"
                         value={this.state.email}
-                        onChange={e => this.setState({ email: e.target.value })}
+                        onChange={e => this.handleUserInput(e)}
                         type="email"
                         className="form-control"
-                        id="validationCustomEmail"
                         placeholder="Email Address"
-                        aria-describedby="inputGroupPrepend"
                         required
                       />
-                      <div className="invalid-feedback">
-                        Please provide a valid email address.
-                      </div>
                     </div>
                   </div>
                   <div className="form-row">
-                    <div className="col">
-                      <label htmlFor="validationCustomPassword">Password</label>
+                    <div
+                      className={`col ${this.errorClass(
+                        this.state.formErrors.password
+                      )}`}
+                    >
+                      <label htmlFor="password">Password</label>
                       <input
+                        name="password"
                         value={this.state.password}
-                        onChange={e =>
-                          this.setState({ password: e.target.value })
-                        }
+                        onChange={e => this.handleUserInput(e)}
                         type="password"
                         className="form-control"
-                        id="validationCustomPassword"
                         placeholder="Password"
-                        aria-describedby="inputGroupPrepend"
                         required
                       />
-                      <div className="invalid-feedback">
-                        Please provide a password.
-                      </div>
                     </div>
                   </div>
                   <button
                     className="btn btn-primary btn-block"
                     type="submit"
-                    onClick={event => this.handleOnClick(event)}
+                    disabled={!this.state.formValid}
+                    onClick={e => this.handleOnClick(e)}
                   >
                     Log In
                   </button>
@@ -112,88 +196,66 @@ class Auth extends Component {
               </div>
 
               <div role="tabpanel" className="tab-pane" id="signup">
-                <form className="needs-validation" noValidate>
+                <form className="needs-validation">
                   <div className="form-row">
-                    <div className="col-sm">
-                      <label htmlFor="validationCustom01">Name</label>
+                    <div
+                      className={`col ${this.errorClass(
+                        this.state.formErrors.name
+                      )}`}
+                    >
+                      <label htmlFor="name">Name</label>
                       <input
                         value={this.state.name}
-                        onChange={e => this.setState({ name: e.target.value })}
+                        onChange={e => this.handleUserInput(e)}
                         type="text"
                         className="form-control"
-                        id="validationCustom01"
                         placeholder="Name"
-                        required
+                        name="name"
                       />
-                      <div className="invalid-feedback">
-                        Please provide your name.
-                      </div>
                     </div>
                   </div>
                   <div className="form-row">
-                    <div className="col">
-                      <label htmlFor="validationCustomEmail">
-                        Email Address
-                      </label>
+                    <div
+                      className={`col ${this.errorClass(
+                        this.state.formErrors.email
+                      )}`}
+                    >
+                      <label htmlFor="email">Email Address</label>
                       <input
                         value={this.state.email}
-                        onChange={e => this.setState({ email: e.target.value })}
+                        onChange={e => this.handleUserInput(e)}
                         type="email"
                         className="form-control"
-                        id="validationCustomEmail"
                         placeholder="Email Address"
-                        aria-describedby="inputGroupPrepend"
-                        required
+                        name="email"
                       />
-                      <div className="invalid-feedback">
-                        Please provide an email address.
-                      </div>
                     </div>
                   </div>
                   <div className="form-row">
-                    <div className="col">
-                      <label htmlFor="validationCustomPassword">Password</label>
+                    <div
+                      className={`col ${this.errorClass(
+                        this.state.formErrors.password
+                      )}`}
+                    >
+                      <label htmlFor="password">Password</label>
                       <input
                         value={this.state.password}
-                        onChange={e =>
-                          this.setState({ password: e.target.value })
-                        }
+                        onChange={e => this.handleUserInput(e)}
                         type="password"
                         className="form-control"
-                        id="validationCustomPassword"
                         placeholder="Password"
-                        aria-describedby="inputGroupPrepend"
-                        required
+                        name="password"
                       />
                       <div className="invalid-feedback">
                         Please choose a password.
                       </div>
                     </div>
                   </div>
-                  <div className="form-group">
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="invalidCheck"
-                        required
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="invalidCheck"
-                      >
-                        Agree to terms and conditions
-                      </label>
-                      <div className="invalid-feedback">
-                        You must agree before signing up.
-                      </div>
-                    </div>
-                  </div>
                   <button
                     className="btn btn-primary btn-block"
                     type="submit"
-                    onClick={event => this.handleOnClick(event)}
+                    onClick={e => this.handleOnClick(e)}
+                    disabled={!this.state.formValid}
                   >
                     Sign Up
                   </button>
