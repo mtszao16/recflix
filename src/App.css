@@ -11,7 +11,12 @@
 
 body {
   color: #dfdfdf;
-  background-color: #232323;
+  background: url(https://raw.githubusercontent.com/UtkarshGupta-CS/recflix/master/public/assets/images/bgimage.jpg)
+    center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .transparent-header {
@@ -283,23 +288,32 @@ body {
   top: -126px;
   left: 50%;
   z-index: -1; */
-  /* background: url(../public/assets/images/movie-audience-alt2.jpg) no-repeat center center
-    fixed;
+  background: url(https://raw.githubusercontent.com/UtkarshGupta-CS/recflix/master/public/assets/images/bgimage.jpg)
+    center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover; */
+  background-size: cover;
 
-  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  height: auto;
+}
+
+.auth-bg {   
+  
+  z-index: -1;
   top: 0;
   left: 0;
 
   /* Preserve aspet ratio */
   min-width: 100%;
   min-height: 100%;
-  z-index: -1;
 }
-
 @media (max-width: 767.8px) {
   .main-bg {
     transform: translate(-50%) scale(0.55);
@@ -365,4 +379,7 @@ body {
 
 .floatClearFix {
   clear: both;
+}
+.logout-btn {
+  border-radius: 0 !important;
 }

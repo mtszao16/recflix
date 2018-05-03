@@ -186,23 +186,14 @@ class Display extends Component {
                   <div
                     key={movie.id}
                     className="card"
-                    style={{ width: '25rem', height: '15rem', margin: '10px' }}
+                    style={{ width: '25rem', margin: '10px', border: 'none' }}
+                    onClick={() => this.handleOnClick(movie)}
                   >
                     <img
-                      className="card-img-top"
                       src={movie.bannerImageUrl || ''}
-                      alt="Card image cap"
+                      alt="movie thumbnail"
                       height="180"
                     />
-                    <div className="card-body">
-                      <h5
-                        className="card-title"
-                        style={{ color: 'black' }}
-                        onClick={() => this.handleOnClick(movie)}
-                      >
-                        {movie.name}
-                      </h5>
-                    </div>
                   </div>
                 );
             })}

@@ -40,13 +40,17 @@ class Landing extends Component {
       getAllMoviesRecommendation: { allMoviesRecommendation }
     } = this.props;
     return (
-      <div>
+      <div className="main-bg">
+        {/* <div className="main-bg">
+          <img src="https://raw.githubusercontent.com/UtkarshGupta-CS/recflix/master/public/assets/images/bgimage.jpg" />
+        </div> */}
         {allMoviesRecommendation &&
           allMoviesRecommendation.length > 0 && (
             <div
               id="recommendationIndicators"
               className="carousel slide"
               data-ride="carousel"
+              style={{ padding: '30px', width: '80%', margin: '0 auto' }}
             >
               <div className="carousel-inner">
                 {allMoviesRecommendation.map((movie, index) => {
@@ -57,6 +61,7 @@ class Landing extends Component {
                         className={`carousel-item ${
                           index === 0 ? 'active' : ''
                         }`}
+                        onClick={() => this.handleOnClick(movie)}
                       >
                         <div className="card-body">
                           <img
@@ -110,23 +115,10 @@ class Landing extends Component {
               <div
                 key={movie.id}
                 className="card"
-                style={{ width: '15rem', height: '20rem', margin: '10px' }}
+                style={{ width: '12rem', margin: '10px', border: 'none' }}
+                onClick={() => this.handleOnClick(movie)}
               >
-                <img
-                  className="card-img-top"
-                  src={movie.imageUrl}
-                  alt="Card image cap"
-                  height="250"
-                />
-                <div className="card-body">
-                  <h5
-                    className="card-title"
-                    style={{ color: 'black' }}
-                    onClick={() => this.handleOnClick(movie)}
-                  >
-                    {movie.name}
-                  </h5>
-                </div>
+                <img src={movie.imageUrl} alt="movie thumbnail" height="250" />
               </div>
             ))}
         </div>

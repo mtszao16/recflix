@@ -83,10 +83,7 @@ class Auth extends Component {
 
   render() {
     return (
-      <div>
-        <div className="main-bg">
-          <img src="https://raw.githubusercontent.com/UtkarshGupta-CS/recflix/master/public/assets/images/movie-audience-alt2.jpg" />
-        </div>
+      <div className="auth-bg">
         <div className="row">
           <div className="col">
             <div className="form">
@@ -190,6 +187,7 @@ class Auth extends Component {
                     </div>
                     <button
                       className="btn btn-primary btn-block"
+                      style={{ marginTop: '10px' }}
                       type="submit"
                       disabled={!this.state.formValid}
                       onClick={e => this.handleOnClick(e)}
@@ -257,6 +255,7 @@ class Auth extends Component {
                     </div>
                     <button
                       className="btn btn-primary btn-block"
+                      style={{ marginTop: '10px' }}
                       type="submit"
                       onClick={e => this.handleOnClick(e)}
                       disabled={!this.state.formValid}

@@ -7,7 +7,7 @@ class Header extends Component {
   render() {
     const authToken = localStorage.getItem(AUTH_TOKEN);
     return (
-      <nav className="navbar transparent-header">
+      <nav className="navbar" style={{ background: 'black', height: '60px' }}>
         <div className="navbar-header">
           <Link className="navbar-brand" to="/">
             <img
@@ -32,7 +32,7 @@ class Header extends Component {
             </div>
           ) : this.props.location.pathname !== '/login' ? (
             <div className="navbar">
-              <Link to="/login" className="btn btn-primary">
+              <Link to="/login" className="btn btn-primary logout-btn">
                 Log In
               </Link>
             </div>
