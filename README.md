@@ -22,7 +22,7 @@
 
 * recflix-recommendation-engine
 
-		cd recflix-recommendation-engine
+		cd recflix_recommendation_engine
 		mvn package
 		java -jar target/recflix_recommendation_engine-jar-with-dependencies.jar		
 
