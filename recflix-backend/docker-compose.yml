@@ -14,14 +14,9 @@ services:
 
   recflix-backend:
     restart: always
-    
     build:
       context: .
-    working_dir: /
-    volumes:
-      - /:/app
     expose:
       - "8080"
-    command: mvn jetty:run
     depends_on:
       - mongodb
