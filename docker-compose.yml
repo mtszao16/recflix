@@ -20,7 +20,7 @@ services:
       - ./recflix-backend:/app
       - ~/.m2:/root/.m2
     command: ["mvn", "clean", "install", "jetty:run"]
-    expose:
-      - "8080"
+    ports:
+      - "8080:8080"
     depends_on:
       - mongodb
