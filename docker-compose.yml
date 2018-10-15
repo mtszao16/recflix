@@ -12,10 +12,14 @@ services:
       - 27017:27017
     command: mongod --smallfiles --logpath=/dev/null # --quiet
 
-  recflix-backend:
+  app:
     restart: always
-    build:
-      context: .
+    build: ./recflix-backend
+    working_dir: /app
+    volumes:
+      - ./recflix-backend:/app
+      - ~/.m2:/root/.m2
+    command: ["mvn", "clean", "install", "jetty:run"]
     expose:
       - "8080"
     depends_on:
