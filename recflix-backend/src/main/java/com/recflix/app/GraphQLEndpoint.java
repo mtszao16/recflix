@@ -31,7 +31,7 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
     private static final MovieRecommendationRepository movieRecommendationRepository;
 
     static {
-        MongoDatabase mongo = new MongoClient().getDatabase("recflix");
+        MongoDatabase mongo = new MongoClient("mongodb").getDatabase("recflix");
         userRepository = new UserRepository(mongo.getCollection("users"));
         userInteractionRepository = new UserInteractionRepository(mongo.getCollection("userInteractions"));
         movieRepository = new MovieRepository(mongo.getCollection("movies"));
