@@ -7,34 +7,39 @@
 
 **A movie streaming system that uses an integrated architecture of movie recommender system which considers user behaviour, interactions, and understanding patterns developed to recommend movies to the user. This architecture analyses and transforms user behaviour into implicit ratings.**
 
-### Usage 
+## Usage
 
-* recflix-frontend
+### Manually
 
-		npm install
-		npm start
+- recflix-frontend
 
-* recflix-backend
+      		npm install
+      		npm start
 
-    	cd recflix-backend
-		mvn jetty:run
+- recflix-backend
 
+      		cd recflix-backend
+      		mvn jetty:run
 
-* recflix-recommendation-engine
+- recflix-recommendation-engine
 
-		cd recflix_recommendation_engine
-		mvn package
-		java -jar target/recflix_recommendation_engine-jar-with-dependencies.jar		
+      		cd recflix_recommendation_engine
+      		mvn package
+      		java -jar target/recflix_recommendation_engine-jar-with-dependencies.jar
+
+### Using Docker
+
+    	docker-compose up
 
 ### TODO
 
-* [ ] Added check for returning passwords User type in graphql schema
+- [ ] Added check for returning passwords User type in graphql schema
 
 ### Collaborators
 
-* [**Utkarsh Gupta**](https://github.com/UtkarshGupta-CS), <https://twitter.com/utkarshgupta97>
-* [**Anand Samuel**](https://github.com/AndyPSam)
-* [**Sumit Kumar**](https://github.com/sumit1202)
+- [**Utkarsh Gupta**](https://github.com/UtkarshGupta-CS), <https://twitter.com/utkarshgupta97>
+- [**Anand Samuel**](https://github.com/AndyPSam)
+- [**Sumit Kumar**](https://github.com/sumit1202)
 
 ## License
 
